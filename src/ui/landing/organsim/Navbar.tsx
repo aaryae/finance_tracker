@@ -27,14 +27,14 @@ const Navbar = () => {
       {/* navmenu */}
       <nav
         id="navbar"
-        className="flex justify-between py-2 px-20 w-full top-0 fixed bg-white  transition-shadow duration-300"
+        className="flex justify-between py-4 px-20 pt-[17px] w-full top-0 fixed bg-[#f8f5f1]  transition-shadow duration-300"
       >
         {/* logo */}
         <div className="text-2xl">Fmanager</div>
 
         {/* navlist */}
         <div className="flex gap-20 justify-between">
-          <div className="flex gap-5 justify-between items-center">
+          <div className="flex gap-5 justify-between items-center text-xl">
             <a href="#">About</a>
             <a href="#">Contact</a>
           </div>
