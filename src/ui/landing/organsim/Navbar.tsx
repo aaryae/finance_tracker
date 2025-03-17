@@ -27,7 +27,7 @@ const Navbar = () => {
       {/* navmenu */}
       <nav
         id="navbar"
-        className="flex justify-between py-2 px-7 w-full fixed bg-white  transition-shadow duration-300"
+        className="flex justify-between py-2 px-20 w-full top-0 fixed bg-white  transition-shadow duration-300"
       >
         {/* logo */}
         <div className="text-2xl">Fmanager</div>

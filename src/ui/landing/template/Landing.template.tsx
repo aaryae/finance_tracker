@@ -5,7 +5,7 @@ import Navbar from "../organsim/Navbar";
 
 const LandingTemplate = () => {
   return (
-    <div className="flex flex-col justify-between h-screen  ">
+    <div className="flex flex-col  h-screen  ">
       <div className="z-50">
         <Banner />
         <Navbar />
