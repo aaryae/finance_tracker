@@ -22,7 +22,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="text"
-                  className="border-0 border-b-2 border-b-black outline-0"
+                  className="border-0 border-b-1 border-b-black outline-0"
                   required
                 />
               </div>
@@ -32,7 +32,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="text"
-                  className="border-0 border-b-2 border-b-black outline-0 "
+                  className="border-0 border-b-1 border-b-black outline-0 "
                   required
                 />
               </div>
@@ -44,7 +44,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="email"
-                  className="border-0 border-b-2 border-b-black outline-0"
+                  className="border-0 border-b-1 border-b-black outline-0"
                   required
                 />
               </div>
@@ -54,7 +54,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="tel"
-                  className="border-0 border-b-2 border-b-black outline-0 "
+                  className="border-0 border-b-1 border-b-black outline-0 "
                 />
               </div>
             </div>
@@ -63,7 +63,7 @@ const Contact = () => {
                 Message
               </label>
               <textarea
-                className="border-0 border-b-2 border-b-black outline-0 w-[75%]"
+                className="border-0 border-b-1 border-b-black outline-0 w-[75%]"
                 rows={4}
               ></textarea>
             </div>
