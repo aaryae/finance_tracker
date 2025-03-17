@@ -1,6 +1,7 @@
 import useToggle from "@hooks/useToggle";
 import { AlignLeft, UserPen, X } from "lucide-react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, toggleMenuOpen] = useToggle(false);
@@ -30,11 +31,13 @@ const Navbar = () => {
         className="flex justify-between py-4 px-20 pt-[17px] w-full top-0 fixed bg-[#f8f5f1]  transition-shadow duration-300"
       >
         {/* logo */}
-        <div className="text-2xl">Fmanager</div>
+        <Link to="/" className="text-2xl">
+          Fmanager
+        </Link>
 
         {/* navlist */}
         <div className="flex gap-20 justify-between">
-          <div className="flex gap-5 justify-between items-center text-xl">
+          <div className="md:flex gap-5 justify-between items-center text-xl hidden">
             <a href="#">About</a>
             <a href="#">Contact</a>
           </div>
@@ -45,7 +48,9 @@ const Navbar = () => {
             </Link> */}
             <div className="cursor-pointer" onClick={() => {}}>
               {/* <LogIn size={24} strokeWidth={0.75} absoluteStrokeWidth /> */}
-              <UserPen size={28} strokeWidth={1} absoluteStrokeWidth />
+              <Link to="/login">
+                <UserPen size={28} strokeWidth={1} absoluteStrokeWidth />
+              </Link>
             </div>
           </div>
           <div
