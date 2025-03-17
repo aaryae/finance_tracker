@@ -5,7 +5,9 @@ const Contact = () => {
     <div className="bg-[#f8f5f1] pt-16">
       <div className="flex flex-col md:flex-row items-center justify-between p-10 px-20  max-w-[1800px] mx-auto w-full gap-20 ">
         <div className="md:w-1/2 mb-6 md:mb-0">
-          <h2 className="text-4xl font-bold mb-4">Request a Consultation</h2>
+          <h2 className="text-6xl  mb-4">
+            Request a <br /> Consultation
+          </h2>
           <p className="text-gray-600">
             Get expert advice tailored to your needs. Our team is here to guide
             you every step of the way. Schedule your consultation today!
@@ -20,7 +22,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="text"
-                  className="border-0 border-b-2 border-b-black outline-0 w-full"
+                  className="border-0 border-b-2 border-b-black outline-0"
                   required
                 />
               </div>
@@ -30,7 +32,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="text"
-                  className="border-0 border-b-2 border-b-black outline-0 w-full"
+                  className="border-0 border-b-2 border-b-black outline-0 "
                   required
                 />
               </div>
@@ -42,7 +44,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="email"
-                  className="border-0 border-b-2 border-b-black outline-0 w-full"
+                  className="border-0 border-b-2 border-b-black outline-0"
                   required
                 />
               </div>
@@ -52,7 +54,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="tel"
-                  className="border-0 border-b-2 border-b-black outline-0 w-full"
+                  className="border-0 border-b-2 border-b-black outline-0 "
                 />
               </div>
             </div>
@@ -61,7 +63,7 @@ const Contact = () => {
                 Message
               </label>
               <textarea
-                className="border-0 border-b-2 border-b-black outline-0 w-full"
+                className="border-0 border-b-2 border-b-black outline-0 w-[75%]"
                 rows={4}
               ></textarea>
             </div>
