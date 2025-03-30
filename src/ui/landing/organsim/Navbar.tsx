@@ -1,90 +1,98 @@
-import useToggle from "@hooks/useToggle";
-import { AlignLeft, UserPen, X } from "lucide-react";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import {
+  Activity,
+  AlignLeft,
+  ArrowLeft,
+  BarChart2,
+  Briefcase,
+  Mail,
+  ShoppingCart,
+} from "lucide-react";
+import { useState } from "react";
 
 const Navbar = () => {
-  const [menuOpen, toggleMenuOpen] = useToggle(false);
-
-  // add box shadow when scroll-Y
-  useEffect(() => {
-    const handleScroll = () => {
-      const navbar = document.getElementById("navbar");
-      if (window.scrollY > 0) {
-        navbar?.classList.add("shadow-md");
-      } else {
-        navbar?.classList.remove("shadow-md");
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const [navstate, setNavstate] = useState(false);
 
   return (
     <>
-      {/* navmenu */}
-      <nav
-        id="navbar"
-        className="flex justify-between py-4 px-20 pt-[17px] w-full top-0 fixed bg-[#f8f5f1]  transition-shadow duration-300"
-      >
-        {/* logo */}
-        <Link to="/" className="text-2xl">
-          Fmanager
-        </Link>
-
-        {/* navlist */}
-        <div className="flex gap-20 justify-between">
-          <div className="md:flex gap-5 justify-between items-center text-xl hidden">
-            <a href="#">About</a>
-            <a href="#">Contact</a>
+      <div className="flex">
+        {/* First Sidebar */}
+        <div
+          className="h-screen fixed w-fit p-7 bg-[#262626] text-white hidden md:block  border-r border-[#ffffff27] z-10"
+          onClick={() => {
+            setNavstate(!navstate);
+          }}
+        >
+          <div className="text-3xl font-extrabold border-0 border-t-2 border-b-2 cursor-pointer">
+            Fi
           </div>
-
-          <div className="hidden md:flex gap-4 m-auto">
-            {/* <Link className='m-auto text-sm cursor-pointer' to='/login'>
-              LogIn
-            </Link> */}
-            <div className="cursor-pointer" onClick={() => {}}>
-              {/* <LogIn size={24} strokeWidth={0.75} absoluteStrokeWidth /> */}
-              <Link to="/login">
-                <UserPen size={28} strokeWidth={1} absoluteStrokeWidth />
-              </Link>
+          <br />
+          <div className="flex flex-col gap-10 py-1">
+            <ShoppingCart size={24} className="cursor-pointer" />
+            <Briefcase size={24} className="cursor-pointer" />
+            <BarChart2 size={24} className="cursor-pointer" />
+            <Activity size={24} className="cursor-pointer" />
+          </div>
+        </div>
+        {/* Second Sidebar */}
+        <div
+          className={`md:ml-20 bg-[#262626] h-screen fixed w-64 p-7  border-r border-[#ffffff27] transition-all duration-300 ease-in-out ${
+            navstate ? "left-0 " : "left-[-100%]"
+          } `}
+        >
+          <div className="text-2xl text-white cursor-pointer flex justify-between">
+            <h1>Dashboard</h1>
+            <div
+              className="rounded-full bg-[#ffffff1a] p-2"
+              onClick={() => {
+                setNavstate(!navstate);
+              }}
+            >
+              <ArrowLeft size={19} strokeWidth={0.5} absoluteStrokeWidth />
             </div>
           </div>
-          <div
-            onClick={() => toggleMenuOpen()}
-            className="flex md:hidden cursor-pointer"
-          >
-            <AlignLeft strokeWidth={0.5} />
-          </div>
+          <br />
+          <nav className="flex flex-col gap-7 mt-3">
+            <a
+              href="#"
+              className="flex items-center space-x-2 text-gray-300 hover:text-white"
+            >
+              <ShoppingCart size={20} /> <span>Ecommerce</span>
+            </a>
+            <a
+              href="#"
+              className="flex items-center space-x-2 text-gray-300 hover:text-white"
+            >
+              <Briefcase size={20} /> <span>Project</span>
+            </a>
+            <a
+              href="#"
+              className="flex items-center space-x-2 text-gray-300 hover:text-white"
+            >
+              <BarChart2 size={20} /> <span>Marketing</span>
+            </a>
+            <a
+              href="#"
+              className="flex items-center space-x-2 text-gray-300 hover:text-white"
+            >
+              <Activity size={20} /> <span>Analytic</span>
+            </a>
+          </nav>
         </div>
-      </nav>
-
-      {/* Overlay : background blur when sidebar is open  */}
-      <div
-        className={`md:hidden block fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ${menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-        onClick={() => toggleMenuOpen()}
-      ></div>
-
-      {/* Sidebar Menu */}
-      <div
-        className={`fixed md:hidden top-0 right-0 h-screen w-1/2 bg-[#ede5df] transition-transform duration-300 ease-in-out transform ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
-      >
+      </div>
+      {/* topbar */}
+      <div className="flex justify-between py-5 w-full bg-[#262626] ">
         <div
-          onClick={() => toggleMenuOpen()}
-          className="absolute top-0 right-0 p-5 cursor-pointer"
+          className={`md:ml-24 px-3 cursor-pointer`}
+          onClick={() => {
+            setNavstate(!navstate);
+          }}
         >
-          <X color="#870003" strokeWidth={0.5} />
+          <AlignLeft color="#ffffff" strokeWidth={0.5} absoluteStrokeWidth />
         </div>
-        <ul className="text-sm flex flex-col justify-center text-center m-auto h-screen gap-5">
-          {/* <NavItem value='Home' route='/' />
-          <NavItem value='Women' route='womenproducts' />
-          <NavItem value='Men' route='menproducts' />
-          <NavItem value='Shop All' route='allproducts' />
-          <NavItem value='About' route='about' /> */}
-        </ul>
+        <div className="flex gap-3  px-5">
+          <Mail color="#ffffff" strokeWidth={0.5} absoluteStrokeWidth />
+          <div className="p-3 rounded-full bg-[#188502]"></div>
+        </div>
       </div>
     </>
   );
