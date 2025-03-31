@@ -38,11 +38,11 @@ const Navbar = () => {
         </div>
         {/* Second Sidebar */}
         <div
-          className={`md:ml-20 bg-[#262626] h-screen fixed w-64 p-7  border-r border-[#ffffff27] transition-all duration-300 ease-in-out ${
-            navstate ? "left-0 " : "left-[-100%]"
+          className={`md:ml-20 bg-[#262626] h-screen fixed md:w-64 w-48 p-7  border-r border-[#ffffff27] transition-all duration-300 ease-in-out z-30 ${
+            navstate ? "left-0 " : "left-[-200%]"
           } `}
         >
-          <div className="text-2xl text-white cursor-pointer flex justify-between">
+          <div className="md:text-2xl text-xl text-white cursor-pointer flex justify-between ">
             <h1>Dashboard</h1>
             <div
               className="rounded-full bg-[#ffffff1a] p-2"
@@ -83,7 +83,7 @@ const Navbar = () => {
         </div>
       </div>
       {/* topbar */}
-      <div className="flex justify-between py-5 w-full bg-[#262626] ">
+      <div className="flex fixed top-0 justify-between py-5 w-full bg-[#262626] ">
         <div
           className={`md:ml-24 px-3 cursor-pointer`}
           onClick={() => {
