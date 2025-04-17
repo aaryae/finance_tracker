@@ -10,17 +10,22 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-const Navbar = () => {
-  const [navstate, setNavstate] = useState(false);
+const Navbar = ({
+  navstate,
+  setNavstate,
+}: {
+  navstate: boolean;
+  setNavstate: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [messagestate, setMessagestate] = useState(false);
   const [profilestate, setProfilestate] = useState(false);
 
   return (
     <>
       <div className="flex">
-        {/* First Sidebar */}
+        {/* First Navbar */}
         <div
-          className="h-screen fixed w-fit px-7 py-6 bg-[#262626] text-white hidden md:block  border-r border-[#ffffff27] z-10"
+          className="h-screen fixed w-fit px-7 py-6 bg-[#262626] text-white hidden md:block border-r border-[#ffffff27] z-40"
           onClick={() => {
             setNavstate(!navstate);
           }}
@@ -36,9 +41,10 @@ const Navbar = () => {
             <Activity size={24} className="cursor-pointer" />
           </div>
         </div>
+        <div className="mt-24 "></div>
         {/* Second Sidebar */}
         <div
-          className={`md:ml-20 bg-[#262626] h-screen fixed md:w-64 w-48 p-7  border-r border-[#ffffff27] transition-all duration-300 ease-in-out z-30 ${
+          className={`md:ml-[5.2rem] bg-[#262626] h-screen fixed md:w-64 w-48 p-7 border-r border-[#ffffff27] transition-all duration-300 ease-in-out z-30 ${
             navstate ? "left-0 " : "left-[-200%]"
           } `}
         >

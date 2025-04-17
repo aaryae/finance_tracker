@@ -1,80 +1,59 @@
-import Button from "@ui/landing/atom /Button";
+import DashboardStats from "@ui/landing/molecule/DashboardStats";
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+} from "recharts";
 
-const Contact = () => {
-  return (
-    <div className="bg-[#f8f5f1] pt-16">
-      <div className="flex flex-col md:flex-row items-center justify-between p-10 px-20  max-w-[1800px] mx-auto w-full gap-20 ">
-        <div className="md:w-1/2 mb-6 md:mb-0">
-          <h2 className="text-6xl  mb-4">
-            Request a <br /> Consultation
-          </h2>
-          <p className="text-gray-600">
-            Get expert advice tailored to your needs. Our team is here to guide
-            you every step of the way. Schedule your consultation today!
-          </p>
-        </div>
-        <div className="md:w-1/2 ">
-          <form className="bg-[#f8f5f1] px-8 pt-6 pb-8 mb-4 w-full">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  First Name *
-                </label>
-                <input
-                  type="text"
-                  className="border-0 border-b-1 border-b-black outline-0"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Last Name *
-                </label>
-                <input
-                  type="text"
-                  className="border-0 border-b-1 border-b-black outline-0 "
-                  required
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div>
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  className="border-0 border-b-1 border-b-black outline-0"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Phone
-                </label>
-                <input
-                  type="tel"
-                  className="border-0 border-b-1 border-b-black outline-0 "
-                />
-              </div>
-            </div>
-            <div className="mt-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Message
-              </label>
-              <textarea
-                className="border-0 border-b-1 border-b-black outline-0 w-[75%]"
-                rows={4}
-              ></textarea>
-            </div>
-            <div className="mt-6">
-              <Button value="Submit" />
-            </div>
-          </form>
-        </div>
-      </div>
+const data = [
+  { name: "Jan", uv: 400 },
+  { name: "Feb", uv: 300 },
+  { name: "Mar", uv: 200 },
+  { name: "Apr", uv: 278 },
+  { name: "May", uv: 189 },
+  { name: "jun", uv: 30 },
+  { name: "jul", uv: 89 },
+  { name: "Aug", uv: 18 },
+  { name: "Sep", uv: 289 },
+  { name: "Oct", uv: 389 },
+  { name: "Nov", uv: 199 },
+];
+
+const Contact = () => (
+  <div className="max-w-5xl   bg-[#262626] rounded-3xl overflow-hidden  ">
+    <div className="bg-[#262626] w-full flex justify-between text-4xl text-[#ffffffb4] p-5 ">
+      <div>overview</div>
+      <div>list</div>
     </div>
-  );
-};
+    <div className="bg-[#262626] text-white  flex gap-4 p-5">
+      <DashboardStats />
+    </div>
+    <div className="py-4 px-6  bg-[#262626]">
+      <ResponsiveContainer height={300}>
+        <LineChart data={data}>
+          <CartesianGrid stroke="#444" horizontal={true} vertical={false} />
+          <XAxis dataKey="name" stroke="#ccc" />
+          {/* <YAxis stroke="#ccc" /> */}
+          <Tooltip
+            contentStyle={{ backgroundColor: "#333", border: "none" }}
+            labelStyle={{ color: "#fff" }}
+            itemStyle={{ color: "#fff" }}
+          />
+          <Legend wrapperStyle={{ color: "#ccc" }} />
+          <Line
+            type="monotone"
+            dataKey="uv"
+            stroke="#4b5bd1"
+            activeDot={{ r: 8 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+);
 
 export default Contact;
