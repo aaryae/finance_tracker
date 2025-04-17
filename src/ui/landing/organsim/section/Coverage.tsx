@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import { Cell, Pie, PieChart } from "recharts";
 
 const RADIAN = Math.PI / 180;
