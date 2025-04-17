@@ -29,7 +29,7 @@ const DashboardStats = () => {
   const [selected, setSelected] = useState("Total profit");
 
   return (
-    <div className="flex gap-4 w-full bg-[#1e1e1e] p-4 rounded-xl">
+    <div className="flex gap-4 w-full bg-[#404040] p-4 rounded-xl">
       {stats.map((stat) => {
         const isSelected = selected === stat.label;
         return (
@@ -38,13 +38,13 @@ const DashboardStats = () => {
             onClick={() => setSelected(stat.label)}
             className={`flex flex-1 cursor-pointer items-center justify-between p-4 rounded-xl transition-all duration-300 ${
               isSelected
-                ? "bg-[#070707] text-white"
-                : "bg-transparent text-gray-300"
+                ? "bg-[#171717] text-white"
+                : "bg-[#404040] text-gray-300"
             }`}
           >
             <div>
-              <p className="text-sm font-medium">{stat.label}</p>
-              <p className="text-2xl font-bold">{stat.value}</p>
+              <p className="text-sm  py-1 font-medium">{stat.label}</p>
+              <p className="text-2xl py-1 font-bold">{stat.value}</p>
               <p
                 className={`text-sm ${
                   stat.changeType === "increase"

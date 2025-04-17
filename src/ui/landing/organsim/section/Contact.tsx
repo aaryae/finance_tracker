@@ -8,6 +8,7 @@ import {
   Tooltip,
   XAxis,
 } from "recharts";
+import Coverage from "./Coverage";
 
 const data = [
   { name: "Jan", uv: 400 },
@@ -24,36 +25,40 @@ const data = [
 ];
 
 const Contact = () => (
-  <div className="max-w-5xl   bg-[#262626] rounded-3xl overflow-hidden  ">
-    <div className="bg-[#262626] w-full flex justify-between text-4xl text-[#ffffffb4] p-5 ">
-      <div>overview</div>
-      <div>list</div>
+  <>
+    <div className="max-w-5xl mx-16  bg-[#262626] rounded-3xl overflow-hidden  ">
+      <div className="bg-[#262626] w-full flex justify-between text-4xl text-[#ffffffb4] p-5 ">
+        <div>overview</div>
+        <div>list</div>
+      </div>
+      <div className="bg-[#262626] text-white  flex gap-4 p-5">
+        <DashboardStats />
+      </div>
+      <div className="py-4 px-6  bg-[#262626]">
+        <ResponsiveContainer height={300}>
+          <LineChart data={data}>
+            <CartesianGrid stroke="#444" horizontal={true} vertical={false} />
+            <XAxis dataKey="name" stroke="#ccc" />
+            {/* <YAxis stroke="#ccc" /> */}
+            <Tooltip
+              contentStyle={{ backgroundColor: "#333", border: "none" }}
+              labelStyle={{ color: "#fff" }}
+              itemStyle={{ color: "#fff" }}
+            />
+            <Legend wrapperStyle={{ color: "#ccc" }} />
+            <Line
+              type="monotone"
+              dataKey="uv"
+              stroke="#4b5bd1"
+              strokeWidth={3}
+              activeDot={{ r: 8 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
-    <div className="bg-[#262626] text-white  flex gap-4 p-5">
-      <DashboardStats />
-    </div>
-    <div className="py-4 px-6  bg-[#262626]">
-      <ResponsiveContainer height={300}>
-        <LineChart data={data}>
-          <CartesianGrid stroke="#444" horizontal={true} vertical={false} />
-          <XAxis dataKey="name" stroke="#ccc" />
-          {/* <YAxis stroke="#ccc" /> */}
-          <Tooltip
-            contentStyle={{ backgroundColor: "#333", border: "none" }}
-            labelStyle={{ color: "#fff" }}
-            itemStyle={{ color: "#fff" }}
-          />
-          <Legend wrapperStyle={{ color: "#ccc" }} />
-          <Line
-            type="monotone"
-            dataKey="uv"
-            stroke="#4b5bd1"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  </div>
+    <Coverage />
+  </>
 );
 
 export default Contact;

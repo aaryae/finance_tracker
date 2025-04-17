@@ -1,9 +1,8 @@
 @import "tailwindcss";
 
 body {
-  background: #070707;
+  background: #0a0a0a;
   font-family:
     "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans",
     Arial, sans-serif;
-    
 }
