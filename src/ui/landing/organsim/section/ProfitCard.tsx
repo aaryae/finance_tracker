@@ -8,9 +8,9 @@ const ProfitCard = () => {
   const progress = (percentage / 100) * circumference;
 
   return (
-    <div className="card-body bg-[#262626] text-gray-900 dark:text-white p-4 rounded-lg shadow-md w-full ">
+    <div className="  text-white p-4  ">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 ">
         <h4 className="text-lg font-semibold">Sales target</h4>
       </div>
 

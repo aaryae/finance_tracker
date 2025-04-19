@@ -57,14 +57,8 @@ const AnalyticsHighExpense = () => {
 
   return (
     <>
-      <div className="w-[330px] h-fit m-2 rounded-3xl bg-[#262626] p-4 text-[#ffffffa9] text-xl">
-        "The lesson of history is that you do not get a sustained economic
-        recovery as long as the financial system is in crisis.""
-        <br />
-        <span className="text-sm"> - Ben Bernanke</span>
-      </div>
-      <br />
-      <div className="w-fit h-fit m-2 rounded-3xl bg-[#262626] p-4 ">
+      <hr />
+      <div className="w-full h-fit m-2 rounded-3xl  p-4 ">
         <h1 className="text-white text-lg md:text-xl mb-4 text-center md:text-left">
           Seems like, your expenditure <br className="hidden md:block" /> is
           high on grossaries
@@ -104,6 +98,13 @@ const AnalyticsHighExpense = () => {
             <span>clothes</span>
           </div>
         </div>
+      </div>
+      <hr />
+      <div className="w-full h-fit m-2 rounded-3xl p-3 text-[#ffffffa9] ">
+        "The lesson of history is that you do not get a sustained economic
+        recovery as long as the financial system is in crisis.""
+        <br />
+        <span className="text-sm"> - Ben Bernanke</span>
       </div>
     </>
   );

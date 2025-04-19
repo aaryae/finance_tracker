@@ -1,12 +1,9 @@
-import Contact from "../organsim/section/AnalyticsLineChart";
+import Hero from "../organsim/Hero";
 
 const LandingPage = () => {
   return (
     <>
-      <Contact navstate={false} />
-      {/* <Hero />
-      <Contact />
-      <Coverage /> */}
+      <Hero />
     </>
   );
 };

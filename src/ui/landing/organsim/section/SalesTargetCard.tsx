@@ -5,7 +5,7 @@ const SalesTargetCard = () => {
   const percentage = 75;
 
   return (
-    <div className="bg-[#1f1f1f]  text-white p-4 rounded-xl flex justify-between items-center w-full max-w-sm shadow-md">
+    <div className="bg-[#1f1f1f]   text-white p-4  flex justify-between items-center w-[100px] rounded-3xl">
       <div>
         <p className="text-sm text-gray-300 mb-2">Sales target</p>
         <div className="flex items-end gap-1 text-xl font-semibold">

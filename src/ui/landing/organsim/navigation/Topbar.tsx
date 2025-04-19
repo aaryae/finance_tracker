@@ -19,7 +19,7 @@ const Topbar = ({
 
   return (
     <>
-      <div className="flex fixed top-0 justify-between py-5 w-full bg-[#262626] border-b-1 border-[#ffffff31]">
+      <div className="flex fixed top-0 justify-between py-5 w-full bg-[#262626] border-b-1 border-[#ffffff31] z-30">
         <div
           className={`md:ml-24 px-3 cursor-pointer`}
           onClick={() => setNavstate((prev) => !prev)}

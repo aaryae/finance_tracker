@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import Footer from "../organsim/Footer";
 import Navbar from "../organsim/Navbar";
 
 const LandingTemplate = () => {
@@ -10,11 +11,12 @@ const LandingTemplate = () => {
       <Navbar navstate={navstate} setNavstate={setNavstate} />
       <div
         className={`pt-24 transition-all duration-300 ease-in-out ${
-          navstate ? "pl-80" : "sm:pl-24"
+          navstate ? " md:pl-80" : ""
         }`}
       >
         <Outlet />
       </div>
+      <Footer />
     </div>
   );
 };
