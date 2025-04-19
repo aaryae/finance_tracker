@@ -58,10 +58,9 @@ const AnalyticsHighExpense = () => {
   return (
     <>
       <hr />
-      <div className="w-full h-fit m-2 rounded-3xl  p-4 ">
-        <h1 className="text-white text-lg md:text-xl mb-4 text-center md:text-left">
-          Seems like, your expenditure <br className="hidden md:block" /> is
-          high on grossaries
+      <div className="w-full h-fit  rounded-3xl  p-4  ">
+        <h1 className="text-white text-lg md:text-xl mb-4 flex justify-center items-center text-center  ">
+          Seems like, your expenditure is high on grossaries
         </h1>
         <div className="flex justify-center">
           <PieChart width={300} height={200}>
@@ -84,7 +83,7 @@ const AnalyticsHighExpense = () => {
             {needle(value, data, cx, cy, iR, oR, "#d0d000")}
           </PieChart>
         </div>
-        <div className="flex flex-col items-start mt-4 text-[#ffffffc5] px-2">
+        <div className="flex flex-col w-full items-center mt-4 text-[#ffffffc5] px-2">
           <div className="flex items-center gap-2 mb-1">
             <span className="bg-red-600 w-4 h-4 rounded-sm"></span>
             <span>grossaries</span>
@@ -100,7 +99,7 @@ const AnalyticsHighExpense = () => {
         </div>
       </div>
       <hr />
-      <div className="w-full h-fit m-2 rounded-3xl p-3 text-[#ffffffa9] ">
+      <div className="w-full h-fit  rounded-3xl p-3 text-[#ffffffa9] ">
         "The lesson of history is that you do not get a sustained economic
         recovery as long as the financial system is in crisis.""
         <br />

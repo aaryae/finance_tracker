@@ -11,7 +11,7 @@ const LandingTemplate = () => {
       <Navbar navstate={navstate} setNavstate={setNavstate} />
       <div
         className={`pt-24 transition-all duration-300 ease-in-out ${
-          navstate ? " md:pl-80" : ""
+          navstate ? " md:pl-80" : "md:pl-20"
         }`}
       >
         <Outlet />

@@ -54,7 +54,7 @@ const SalesTargetCard = () => {
                  a 15.9155 15.9155 0 0 1 0 -31.831"
             />
           </svg>
-          <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-white">
+          <div className="absolute inset-0 flex items-center justify-center text-[10px] sm:text-xs font-bold text-white">
             {percentage}%
           </div>
         </div>

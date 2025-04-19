@@ -8,9 +8,9 @@ const Hero = () => {
     <>
       <div className="container mx-auto">
         <div className="flex flex-wrap ">
-          <div className="flex flex-col gap-6 w-full lg:w-3/4">
+          <div className="flex flex-col gap-6 w-full lg:w-3/4 ">
             <AnalyticsLineChart />
-            <div className="flex flex-wrap gap-6 md:mx-4 mx-3 justify-center">
+            <div className="flex flex-wrap gap-6 md:mx-4 mx-3 justify-start">
               <SimpleTable />
               <SimpleTable />
             </div>

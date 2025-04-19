@@ -6,8 +6,13 @@ const SimpleTable = () => {
   ];
 
   return (
-    <div className="bg-[#262626] text-white p-4 rounded-xl w-full max-w-5xl mx-auto  ">
-      <h2 className="text-xl font-semibold mb-4">Recent Transactions</h2>
+    <div className="bg-[#262626] text-white p-4 rounded-xl w-full max-w-5xl   ">
+      <div className="flex w-full justify-between">
+        <h2 className="text-xl font-semibold mb-4">Recent Transactions</h2>
+        <a className="underline" href="#">
+          more
+        </a>
+      </div>
       <table className="w-full text-left border-separate border-spacing-y-2">
         <thead>
           <tr className="text-gray-400 text-sm">

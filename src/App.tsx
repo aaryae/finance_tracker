@@ -11,10 +11,6 @@ function App() {
       element: <LandingTemplate />,
       children: [
         { index: true, element: <LandingPage /> },
-        // { path: '/womenproducts', element: <WomenProduct /> },
-        // { path: '/menproducts', element: <MenProduct /> },
-        // { path: '/products', element: <AllProduct /> },
-        // { path: '/products/:productId', element: <ProductDetails /> },
       ],
     },
     { path: "/register", element: <Register /> },
