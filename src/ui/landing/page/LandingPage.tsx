@@ -1,9 +1,9 @@
-import Contact from "../organsim/section/Contact";
+import Contact from "../organsim/section/AnalyticsLineChart";
 
 const LandingPage = () => {
   return (
     <>
-      <Contact />
+      <Contact navstate={false} />
       {/* <Hero />
       <Contact />
       <Coverage /> */}

@@ -1,4 +1,5 @@
 import video from "@assets/file.mp4";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   return (
@@ -69,8 +70,10 @@ const LoginPage = () => {
           </form>
 
           <p className="text-sm text-white mt-4 text-center">
-            Don't have an account?{" "}
-            <span className="underline cursor-pointer">Sign up</span>
+            Don't have an account?
+            <Link to="/register" className="underline cursor-pointer">
+              Sign up
+            </Link>
           </p>
         </div>
       </div>

@@ -29,7 +29,7 @@ const DashboardStats = () => {
   const [selected, setSelected] = useState("Total profit");
 
   return (
-    <div className="flex gap-4 w-full bg-[#404040] p-4 rounded-xl">
+    <div className="flex flex-wrap gap-4 w-full bg-[#404040] p-4 rounded-xl">
       {stats.map((stat) => {
         const isSelected = selected === stat.label;
         return (
