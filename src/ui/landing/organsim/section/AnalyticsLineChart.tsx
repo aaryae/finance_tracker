@@ -26,7 +26,7 @@ const data = [
 
 const AnalyticsLineChart = () => (
   <>
-    <div className="max-w-5xl mx-3  bg-[#262626] rounded-3xl overflow-hidden   ">
+    <div className="max-w-4xl w-full mx-3  bg-[#262626] rounded-3xl overflow-hidden   ">
       <div className="bg-[#262626] w-full flex justify-between text-4xl text-[#ffffffb4] px-6 ">
         <h1 className="text-3xl p-2 tracking-wide capitalize">overview</h1>
       </div>

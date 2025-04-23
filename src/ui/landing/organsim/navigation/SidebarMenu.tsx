@@ -1,4 +1,6 @@
 import { Activity, ArrowLeft, BarChart2, CastIcon, Magnet } from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SidebarMenu = ({
   navstate,
@@ -7,6 +9,8 @@ const SidebarMenu = ({
   navstate: boolean;
   setNavstate: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const [active, setActive] = useState("Analytics");
+
   return (
     <>
       {navstate && (
@@ -32,30 +36,48 @@ const SidebarMenu = ({
         </div>
         <br />
         <nav className="flex flex-col gap-7 mt-3">
-          <a
-            href="#"
-            className="flex items-center space-x-2 text-gray-300 hover:text-white"
+          <Link
+            to="/"
+            onClick={() => setActive("Analytics")}
+            className={`flex items-center space-x-2 ${
+              active === "Analytics"
+                ? "text-white font-semibold"
+                : "text-gray-300"
+            } hover:text-white`}
           >
             <Activity size={20} /> <span>Analytics</span>
-          </a>
-          <a
-            href="#"
-            className="flex items-center space-x-2 text-gray-300 hover:text-white"
+          </Link>
+          <Link
+            to="/income"
+            onClick={() => setActive("Income")}
+            className={`flex items-center space-x-2 ${
+              active === "Income" ? "text-white font-semibold" : "text-gray-300"
+            } hover:text-white`}
           >
             <CastIcon size={20} /> <span>Income</span>
-          </a>
-          <a
-            href="#"
-            className="flex items-center space-x-2 text-gray-300 hover:text-white"
+          </Link>
+          <Link
+            to="/expenditure"
+            onClick={() => setActive("Expenditure")}
+            className={`flex items-center space-x-2 ${
+              active === "Expenditure"
+                ? "text-white font-semibold"
+                : "text-gray-300"
+            } hover:text-white`}
           >
             <BarChart2 size={20} /> <span>Expenditure</span>
-          </a>
-          <a
-            href="#"
-            className="flex items-center space-x-2 text-gray-300 hover:text-white"
+          </Link>
+          <Link
+            to="/userprofile"
+            onClick={() => setActive("UserProfile")}
+            className={`flex items-center space-x-2 ${
+              active === "UserProfile"
+                ? "text-white font-semibold"
+                : "text-gray-300"
+            } hover:text-white`}
           >
             <Magnet size={20} /> <span>UserProfile</span>
-          </a>
+          </Link>
         </nav>
       </div>
     </>
