@@ -6,7 +6,7 @@ const SimpleTable = () => {
   ];
 
   return (
-    <div className="bg-[#262626] text-white p-4 rounded-xl w-full max-w-5xl   ">
+    <div className="bg-[#262626] text-white p-4 rounded-xl w-full max-w-4xl   ">
       <div className="flex w-full justify-between">
         <h2 className="text-xl font-semibold mb-4">Recent Transactions</h2>
         <a className="underline" href="#">
