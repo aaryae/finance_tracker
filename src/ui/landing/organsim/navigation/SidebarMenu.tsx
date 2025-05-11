@@ -68,15 +68,15 @@ const SidebarMenu = ({
             <BarChart2 size={20} /> <span>Expenditure</span>
           </Link>
           <Link
-            to="/userprofile"
-            onClick={() => setActive("UserProfile")}
+            to="/admin"
+            onClick={() => setActive("admin")}
             className={`flex items-center space-x-2 ${
               active === "UserProfile"
                 ? "text-white font-semibold"
                 : "text-gray-300"
             } hover:text-white`}
           >
-            <Magnet size={20} /> <span>UserProfile</span>
+            <Magnet size={20} /> <span>admin</span>
           </Link>
         </nav>
       </div>
