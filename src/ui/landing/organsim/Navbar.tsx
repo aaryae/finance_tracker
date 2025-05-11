@@ -1,6 +1,6 @@
-import SidebarIcons from "./navigation/SidebarIcons";
-import SidebarMenu from "./navigation/SidebarMenu";
-import Topbar from "./navigation/Topbar";
+import SidebarIcons from "./navigationbars/SidebarIcons";
+import SidebarMenu from "./navigationbars/SidebarMenu";
+import Topbar from "./navigationbars/Topbar";
 
 const Navbar = ({
   navstate,
