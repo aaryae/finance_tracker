@@ -55,14 +55,14 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-screen ">
       {/* Background Video */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute top-[50%] left-[50%] w-full h-screen object-cover -translate-x-1/2 -translate-y-1/2 z-[-1] opacity-60"
+        className="absolute top-[50%] left-[50%] w-full  object-cover -translate-x-1/2 -translate-y-1/2 z-[-1] opacity-60"
       >
         <source src={video} type="video/mp4" />
         Your browser does not support the video tag.

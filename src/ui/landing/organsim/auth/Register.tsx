@@ -1,22 +1,26 @@
 import video from "@assets/file.mp4";
+import { Formtype } from "@type/form.type";
 import axios, { AxiosError } from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
-import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import {Formtype} from "@type/form.type"
+import * as yup from "yup";
 
 // Define Yup validation schema
 // 👇 Define form type manually
-
 
 // 👇 Define Yup schema separately
 const registerSchema = yup.object({
   firstname: yup.string().required("First name is required"),
   lastname: yup.string().required("Last name is required"),
-  email: yup.string().required("Email is required").email("Invalid email format"),
-  password: yup.string().required("Password is required").min(6, "Must be at least 6 characters"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email format"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(6, "Must be at least 6 characters"),
 });
-
 
 const Register = () => {
   const navigate = useNavigate();
@@ -53,13 +57,13 @@ const Register = () => {
       const axiosError = err as AxiosError<{ message: string }>;
       alert(
         axiosError.response?.data?.message ||
-        "Registration failed. Please try again."
+          "Registration failed. Please try again."
       );
     }
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-fit overflow-hidden">
       <video
         autoPlay
         loop
@@ -81,38 +85,49 @@ const Register = () => {
             Register
           </h2>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col space-y-6"
+          >
             {/* First Name */}
             <div className="flex flex-col space-y-2">
-              <label htmlFor="firstname" className="text-white text-sm font-medium">
+              <label
+                htmlFor="firstname"
+                className="text-white text-sm font-medium"
+              >
                 First Name <span className="text-red-600">*</span>
               </label>
               <input
                 {...register("firstname")}
                 type="text"
                 id="firstname"
-                placeholder="John"
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
               />
               {errors.firstname && (
-                <p className="text-red-400 text-xs">{errors.firstname.message}</p>
+                <p className="text-red-400 text-xs">
+                  {errors.firstname.message}
+                </p>
               )}
             </div>
 
             {/* Last Name */}
             <div className="flex flex-col space-y-2">
-              <label htmlFor="lastname" className="text-white text-sm font-medium">
+              <label
+                htmlFor="lastname"
+                className="text-white text-sm font-medium"
+              >
                 Last Name <span className="text-red-600">*</span>
               </label>
               <input
                 {...register("lastname")}
                 type="text"
                 id="lastname"
-                placeholder="Doe"
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
               />
               {errors.lastname && (
-                <p className="text-red-400 text-xs">{errors.lastname.message}</p>
+                <p className="text-red-400 text-xs">
+                  {errors.lastname.message}
+                </p>
               )}
             </div>
 
@@ -125,7 +140,6 @@ const Register = () => {
                 {...register("email")}
                 type="email"
                 id="email"
-                placeholder="you@example.com"
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
               />
               {errors.email && (
@@ -135,18 +149,22 @@ const Register = () => {
 
             {/* Password */}
             <div className="flex flex-col space-y-2">
-              <label htmlFor="password" className="text-white text-sm font-medium">
+              <label
+                htmlFor="password"
+                className="text-white text-sm font-medium"
+              >
                 Password <span className="text-red-600">*</span>
               </label>
               <input
                 {...register("password")}
                 type="password"
                 id="password"
-                placeholder="••••••••"
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
               />
               {errors.password && (
-                <p className="text-red-400 text-xs">{errors.password.message}</p>
+                <p className="text-red-400 text-xs">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 

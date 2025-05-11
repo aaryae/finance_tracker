@@ -1,22 +1,21 @@
+import video from "@assets/file.mp4";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 
-// Define form type
 type ForgotPasswordForm = {
   email: string;
   password: string;
 };
 
-// Yup schema
 const forgotPasswordSchema = yup.object({
   email: yup.string().required("Email is required").email("Invalid email"),
   password: yup
     .string()
     .required("New password is required")
-    .min(6, "At least 6 characters"),
+    .min(6, "Password must be at least 6 characters"),
 });
 
 const ForgotPasswordPage = () => {
@@ -34,11 +33,10 @@ const ForgotPasswordPage = () => {
     try {
       await forgotPasswordSchema.validate(data, { abortEarly: false });
 
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:9090/api/user/auth/forgot-password",
         data
       );
-      console.log(response);
       setInfo("Verification email has been sent. Please check your inbox.");
     } catch (err) {
       if (err instanceof yup.ValidationError) {
@@ -54,78 +52,97 @@ const ForgotPasswordPage = () => {
 
       const axiosError = err as AxiosError<{ message: string }>;
       alert(
-        axiosError.response?.data?.message || "Something went wrong. Try again."
+        axiosError.response?.data?.message ||
+          "Something went wrong. Please try again."
       );
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
-          Forgot Password
-        </h2>
+    <div className="relative w-full h-screen overflow-hidden">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-[50%] left-[50%] w-full h-screen object-cover -translate-x-1/2 -translate-y-1/2 z-[-1] opacity-60"
+      >
+        <source src={video} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
-        {info && (
-          <p className="text-green-600 text-sm text-center mb-4">{info}</p>
-        )}
+      <h1 className="uppercase text-6xl text-white py-10 text-center">
+        <span className="text-5xl">Reset your</span> <br /> Finance password,
+      </h1>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* Email */}
-          <div className="flex flex-col space-y-1">
-            <label
-              htmlFor="email"
-              className="text-sm font-medium text-gray-700"
-            >
-              Email Address
-            </label>
-            <input
-              {...register("email")}
-              type="email"
-              id="email"
-              placeholder="you@example.com"
-              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.email && (
-              <p className="text-red-500 text-xs">{errors.email.message}</p>
-            )}
-          </div>
+      <div className="relative z-10 flex flex-col items-center mt-10">
+        <div className="w-full max-w-md mx-4">
+          <h2 className="uppercase text-4xl font-semibold text-white mb-6 text-center">
+            Forgot Password
+          </h2>
 
-          {/* New Password */}
-          <div className="flex flex-col space-y-1">
-            <label
-              htmlFor="password"
-              className="text-sm font-medium text-gray-700"
-            >
-              New Password
-            </label>
-            <input
-              {...register("password")}
-              type="password"
-              id="password"
-              placeholder="New secure password"
-              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.password && (
-              <p className="text-red-500 text-xs">{errors.password.message}</p>
-            )}
-          </div>
+          {info && (
+            <p className="text-green-300 text-sm text-center mb-4">{info}</p>
+          )}
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition"
-            disabled={isSubmitting}
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col space-y-6"
           >
-            {isSubmitting ? "Sending..." : "Send Reset Email"}
-          </button>
-        </form>
+            {/* Email */}
+            <div className="flex flex-col space-y-2">
+              <label htmlFor="email" className="text-white text-sm font-medium">
+                Email Address <span className="text-red-600">*</span>
+              </label>
+              <input
+                {...register("email")}
+                id="email"
+                type="email"
+                className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
+              />
+              {errors.email && (
+                <p className="text-red-400 text-xs">{errors.email.message}</p>
+              )}
+            </div>
 
-        <p className="text-sm text-center text-gray-600 mt-4">
-          Back to{" "}
-          <Link to="/login" className="text-blue-600 underline">
-            Login
-          </Link>
-        </p>
+            {/* New Password */}
+            <div className="flex flex-col space-y-2">
+              <label
+                htmlFor="password"
+                className="text-white text-sm font-medium"
+              >
+                New Password <span className="text-red-600">*</span>
+              </label>
+              <input
+                {...register("password")}
+                id="password"
+                type="password"
+                className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
+              />
+              {errors.password && (
+                <p className="text-red-400 text-xs">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              className="bg-white text-black font-semibold py-2 rounded-lg hover:bg-gray-200 transition-all duration-300"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Sending..." : "Send Verification Email"}
+            </button>
+          </form>
+
+          <p className="text-sm text-white mt-4 text-center">
+            Remembered your password?{" "}
+            <Link to="/login" className="underline cursor-pointer">
+              Back to Login
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
