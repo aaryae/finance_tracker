@@ -63,7 +63,7 @@ const Register = () => {
   };
 
   return (
-    <div className="relative w-full h-fit overflow-hidden">
+    <div className="relative w-full h-screen overflow-hidden">
       <video
         autoPlay
         loop
@@ -74,6 +74,7 @@ const Register = () => {
         <source src={video} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
+      
 
       <h1 className="uppercase text-6xl text-white py-10 text-center">
         <span className="text-5xl">Create your</span> <br /> Finance tracker,
