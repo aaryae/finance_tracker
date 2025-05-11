@@ -1,7 +1,7 @@
-import AnalyticsHighExpense from "./section/AnalyticsHighExpense";
-import AnalyticsLineChart from "./section/AnalyticsLineChart";
-import ProfitCard from "./section/ProfitCard";
-import SimpleTable from "./section/SimpleTable";
+import AnalyticsHighExpense from "./section/heroAnalytics/AnalyticsHighExpense";
+import AnalyticsLineChart from "./section/heroAnalytics/AnalyticsLineChart";
+import ProfitCard from "./section/heroAnalytics/ProfitCard";
+import SimpleTable from "./section/incomeTable/IncomeTable";
 
 const Hero = () => {
   return (

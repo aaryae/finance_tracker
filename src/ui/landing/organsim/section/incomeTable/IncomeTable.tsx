@@ -1,4 +1,4 @@
-const SimpleTable = () => {
+const IncomeTable = () => {
   const data = [
     { name: "Tara Fletcher", amount: 279 },
     { name: "Joyce Freeman", amount: 831 },
@@ -8,7 +8,7 @@ const SimpleTable = () => {
   return (
     <div className="bg-[#262626] text-white p-4 rounded-xl w-full max-w-4xl   ">
       <div className="flex w-full justify-between">
-        <h2 className="text-xl font-semibold mb-4">Recent Transactions</h2>
+        <h2 className="text-xl font-semibold mb-4">Income Table</h2>
         <a className="underline" href="#">
           more
         </a>
@@ -44,4 +44,4 @@ const SimpleTable = () => {
   );
 };
 
-export default SimpleTable;
+export default IncomeTable;

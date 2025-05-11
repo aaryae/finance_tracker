@@ -1,14 +1,22 @@
 import video from "@assets/file.mp4";
 import axios, { AxiosError } from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
+import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
+import {Formtype} from "@type/form.type"
 
-type FormData = {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-};
+// Define Yup validation schema
+// 👇 Define form type manually
+
+
+// 👇 Define Yup schema separately
+const registerSchema = yup.object({
+  firstname: yup.string().required("First name is required"),
+  lastname: yup.string().required("Last name is required"),
+  email: yup.string().required("Email is required").email("Invalid email format"),
+  password: yup.string().required("Password is required").min(6, "Must be at least 6 characters"),
+});
+
 
 const Register = () => {
   const navigate = useNavigate();
@@ -16,22 +24,36 @@ const Register = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<FormData>();
+  } = useForm<Formtype>();
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<Formtype> = async (data) => {
     try {
+      await registerSchema.validate(data, { abortEarly: false });
+
       await axios.post("http://localhost:9090/api/user/auth/sign-up", data);
       alert("Registration successful!");
       reset();
       navigate("/login");
-    } catch (error) {
-      const axiosError = error as AxiosError<{ message: string }>;
-      console.error("Registration failed:", axiosError);
+    } catch (err) {
+      if (err instanceof yup.ValidationError) {
+        err.inner.forEach((validationError) => {
+          if (validationError.path) {
+            setError(validationError.path as keyof Formtype, {
+              type: "manual",
+              message: validationError.message,
+            });
+          }
+        });
+        return;
+      }
+
+      const axiosError = err as AxiosError<{ message: string }>;
       alert(
         axiosError.response?.data?.message ||
-          "Registration failed. Please try again."
+        "Registration failed. Please try again."
       );
     }
   };
@@ -59,53 +81,38 @@ const Register = () => {
             Register
           </h2>
 
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col space-y-6"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-6">
             {/* First Name */}
             <div className="flex flex-col space-y-2">
-              <label
-                htmlFor="firstname"
-                className="text-white text-sm font-medium"
-              >
+              <label htmlFor="firstname" className="text-white text-sm font-medium">
                 First Name <span className="text-red-600">*</span>
               </label>
               <input
-                {...register("firstname", {
-                  required: "First name is required",
-                })}
+                {...register("firstname")}
                 type="text"
                 id="firstname"
                 placeholder="John"
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
               />
               {errors.firstname && (
-                <p className="text-red-400 text-xs">
-                  {errors.firstname.message}
-                </p>
+                <p className="text-red-400 text-xs">{errors.firstname.message}</p>
               )}
             </div>
 
             {/* Last Name */}
             <div className="flex flex-col space-y-2">
-              <label
-                htmlFor="lastname"
-                className="text-white text-sm font-medium"
-              >
+              <label htmlFor="lastname" className="text-white text-sm font-medium">
                 Last Name <span className="text-red-600">*</span>
               </label>
               <input
-                {...register("lastname", { required: "Last name is required" })}
+                {...register("lastname")}
                 type="text"
                 id="lastname"
                 placeholder="Doe"
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
               />
               {errors.lastname && (
-                <p className="text-red-400 text-xs">
-                  {errors.lastname.message}
-                </p>
+                <p className="text-red-400 text-xs">{errors.lastname.message}</p>
               )}
             </div>
 
@@ -115,13 +122,7 @@ const Register = () => {
                 Email <span className="text-red-600">*</span>
               </label>
               <input
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Invalid email format",
-                  },
-                })}
+                {...register("email")}
                 type="email"
                 id="email"
                 placeholder="you@example.com"
@@ -134,29 +135,18 @@ const Register = () => {
 
             {/* Password */}
             <div className="flex flex-col space-y-2">
-              <label
-                htmlFor="password"
-                className="text-white text-sm font-medium"
-              >
+              <label htmlFor="password" className="text-white text-sm font-medium">
                 Password <span className="text-red-600">*</span>
               </label>
               <input
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters",
-                  },
-                })}
+                {...register("password")}
                 type="password"
                 id="password"
                 placeholder="••••••••"
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
               />
               {errors.password && (
-                <p className="text-red-400 text-xs">
-                  {errors.password.message}
-                </p>
+                <p className="text-red-400 text-xs">{errors.password.message}</p>
               )}
             </div>
 

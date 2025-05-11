@@ -10,18 +10,18 @@ import {
 } from "recharts";
 
 const data = [
-  { name: "Jan", uv: 0 },
-  { name: "Feb", uv: 300 },
-  { name: "Mar", uv: 200 },
-  { name: "Apr", uv: 278 },
-  { name: "May", uv: 189 },
-  { name: "jun", uv: 30 },
-  { name: "jul", uv: 89 },
-  { name: "Aug", uv: 18 },
-  { name: "Sep", uv: 289 },
-  { name: "Oct", uv: 389 },
-  { name: "Nov", uv: 199 },
-  { name: "Nov", uv: 199 },
+  { name: "Jan", data: 0 },
+  { name: "Feb", data: 300 },
+  { name: "Mar", data: 200 },
+  { name: "Apr", data: 278 },
+  { name: "May", data: 189 },
+  { name: "jun", data: 30 },
+  { name: "jul", data: 89 },
+  { name: "Aug", data: 18 },
+  { name: "Sep", data: 289 },
+  { name: "Oct", data: 389 },
+  { name: "Nov", data: 199 },
+  { name: "Nov", data: 199 },
 ];
 
 const AnalyticsLineChart = () => (
@@ -47,7 +47,7 @@ const AnalyticsLineChart = () => (
             <Legend wrapperStyle={{ color: "#ccc" }} />
             <Line
               type="monotone"
-              dataKey="uv"
+              dataKey="data"
               stroke="#4b5bd1"
               strokeWidth={3}
               activeDot={{ r: 8 }}

@@ -8,6 +8,7 @@ import LandingTemplate from "@ui/landing/template/Landing.template";
 // import ProtectedRoute from "@ui/common/ProtectedRoute"; // ✅ Import this
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ForgotPassword from "@ui/landing/organsim/auth/ForgotPassword";
 
 function App() {
   const router = createBrowserRouter([
@@ -27,6 +28,7 @@ function App() {
       ],
     },
     { path: "/register", element: <Register /> },
+    {path:"/forgot-password",element:<ForgotPassword/>},
     { path: "/login", element: <Login /> },
   ]);
 

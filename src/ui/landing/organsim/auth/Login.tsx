@@ -1,11 +1,11 @@
 import video from "@assets/file.mp4";
-import { LoginFormData } from "@type/login.type";
+import { Formtype } from "@type/form.type";
 import axios, { AxiosError } from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
-// Define Yup schema
+// Yup schema
 const loginSchema = yup.object({
   email: yup
     .string()
@@ -13,7 +13,6 @@ const loginSchema = yup.object({
     .email("Invalid email format"),
   password: yup.string().required("Password is required"),
 });
-
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -23,11 +22,10 @@ const LoginPage = () => {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<LoginFormData>();
+  } = useForm<Formtype>();
 
-  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
+  const onSubmit: SubmitHandler<Formtype> = async (data) => {
     try {
-      // Manual validation with Yup
       await loginSchema.validate(data, { abortEarly: false });
 
       const res = await axios.post(
@@ -38,20 +36,17 @@ const LoginPage = () => {
       navigate("/");
       console.log(res);
     } catch (err) {
-      // Catch Yup validation errors
       if (err instanceof yup.ValidationError) {
-        err.inner.forEach((validationError) => {
-          if (validationError.path) {
-            setError(validationError.path as keyof LoginFormData, {
-              type: "manual",
-              message: validationError.message,
-            });
+        for (const issue of err.inner) {
+          if (issue.path === "email") {
+            setError("email", { type: "manual", message: issue.message });
+          } else if (issue.path === "password") {
+            setError("password", { type: "manual", message: issue.message });
           }
-        });
+        }
         return;
       }
 
-      // Axios error handling
       const axiosError = err as AxiosError<{ message: string }>;
       alert(
         axiosError.response?.data?.message || "Login failed. Please try again."
@@ -100,7 +95,6 @@ const LoginPage = () => {
                 {...register("email")}
                 id="email"
                 type="email"
-                placeholder="you@example.com"
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80 transition"
               />
               {errors.email && (
@@ -120,7 +114,6 @@ const LoginPage = () => {
                 {...register("password")}
                 id="password"
                 type="password"
-                placeholder="••••••••"
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80 transition"
               />
               {errors.password && (
@@ -128,6 +121,16 @@ const LoginPage = () => {
                   {errors.password.message}
                 </p>
               )}
+            </div>
+
+            {/* Forgot Password */}
+            <div className="flex  -mt-2">
+              <Link
+                to="/forgot-password"
+                className="text-white text-xs underline hover:text-gray-300 transition"
+              >
+                Forgot Password?
+              </Link>
             </div>
 
             <button

@@ -1,25 +1,14 @@
-const data = [
-  { name: "Tara Fletcher", amount: 279 },
-  { name: "Joyce Freeman", amount: 831 },
-  { name: "Brittany Hale", amount: 142 },
-  { name: "Brittany Hale", amount: 142 },
-  { name: "Brittany Hale", amount: 142 },
-  { name: "Brittany Hale", amount: 142 },
-  { name: "Brittany Hale", amount: 142 },
-  { name: "Brittany Hale", amount: 142 },
-  { name: "Brittany Hale", amount: 142 },
-  { name: "Brittany Hale", amount: 142 },
-  { name: "Brittany Hale", amount: 142 },
-  { name: "Brittany Hale", amount: 142 },
-  { name: "Brittany Hale", amount: 142 },
-  { name: "Brittany Hale", amount: 142 },
-];
+const ExpenseTable = () => {
+  const data = [
+    { name: "Tara Fletcher", amount: 279 },
+    { name: "Joyce Freeman", amount: 831 },
+    { name: "Brittany Hale", amount: 142 },
+  ];
 
-const Admin = () => {
   return (
-    <div className="bg-[#262626] text-white p-4 rounded-xl w-fit  mx-10   ">
+    <div className="bg-[#262626] text-white p-4 rounded-xl w-full max-w-4xl   ">
       <div className="flex w-full justify-between">
-        <h2 className="text-xl font-semibold mb-4">Recent Transactions</h2>
+        <h2 className="text-xl font-semibold mb-4">Expense Table</h2>
         <a className="underline" href="#">
           more
         </a>
@@ -55,4 +44,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default ExpenseTable;
