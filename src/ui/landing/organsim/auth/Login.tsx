@@ -1,12 +1,19 @@
 import video from "@assets/file.mp4";
+import { LoginFormData } from "@type/login.type";
 import axios, { AxiosError } from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup";
 
-type LoginFormData = {
-  email: string;
-  password: string;
-};
+// Define Yup schema
+const loginSchema = yup.object({
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email format"),
+  password: yup.string().required("Password is required"),
+});
+
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -14,20 +21,38 @@ const LoginPage = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>();
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
+      // Manual validation with Yup
+      await loginSchema.validate(data, { abortEarly: false });
+
       const res = await axios.post(
         "http://localhost:9090/api/user/auth/sign-in",
         data
       );
       alert("Login successful!");
-      navigate("/"); 
+      navigate("/");
       console.log(res);
-    } catch (error) {
-      const axiosError = error as AxiosError<{ message: string }>;
+    } catch (err) {
+      // Catch Yup validation errors
+      if (err instanceof yup.ValidationError) {
+        err.inner.forEach((validationError) => {
+          if (validationError.path) {
+            setError(validationError.path as keyof LoginFormData, {
+              type: "manual",
+              message: validationError.message,
+            });
+          }
+        });
+        return;
+      }
+
+      // Axios error handling
+      const axiosError = err as AxiosError<{ message: string }>;
       alert(
         axiosError.response?.data?.message || "Login failed. Please try again."
       );
@@ -72,13 +97,7 @@ const LoginPage = () => {
                 Email Address <span className="text-red-700">*</span>
               </label>
               <input
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Invalid email format",
-                  },
-                })}
+                {...register("email")}
                 id="email"
                 type="email"
                 placeholder="you@example.com"
@@ -98,9 +117,7 @@ const LoginPage = () => {
                 Password <span className="text-red-700">*</span>
               </label>
               <input
-                {...register("password", {
-                  required: "Password is required",
-                })}
+                {...register("password")}
                 id="password"
                 type="password"
                 placeholder="••••••••"
