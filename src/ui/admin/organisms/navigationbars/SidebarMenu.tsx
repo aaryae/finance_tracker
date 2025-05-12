@@ -36,7 +36,7 @@ const SidebarMenu = ({
         <br />
         <nav className="flex flex-col gap-7 mt-10">
           <Link
-            to="/"
+            to="/admin"
             onClick={() => setActive("Dashboard")}
             className={`flex items-center space-x-2 ${active === "Dashboard"
               ? "text-white font-semibold"
