@@ -9,13 +9,14 @@ import LandingTemplate from "@ui/landing/template/Landing.template";
 import AdminDashboard from "@ui/admin/pages/AdminDashboard";
 import { default as AdminTable } from "@ui/admin/pages/AdminTable";
 import AdminTemplate from "@ui/admin/template/AdminTemplate";
+import ProtectedRoute from "@ui/common/ProtectedRoute";
 import ForgotPassword from "@ui/landing/organsim/auth/ForgotPassword";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
   const router = createBrowserRouter([
     {
-      // element: <ProtectedRoute />, // ✅ All routes inside here are protected
+      element: <ProtectedRoute />, // ✅ All routes inside here are protected
       children: [
         {
           path: "/",
@@ -28,7 +29,7 @@ function App() {
           ],
         },
         {
-          path: "admin",
+          path: "/admin",
           element: <AdminTemplate />,
           children: [
             { index: true, element: <AdminDashboard /> },
