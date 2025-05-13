@@ -67,17 +67,15 @@ const LoginPage = () => {
 
       const res = await axios.post(
         "http://localhost:9090/api/user/auth/sign-in",
-        data,
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("isLoggedIn")}`,
-          },
-        }
+        data
       );
+      console.log(res)
+      const userId = res.data?.userId;
       const refreshToken = res.data?.refreshToken;
       const accessToken = res.data?.token;
       const role = res.data?.role;
 
+      localStorage.setItem("userId", userId);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("isLoggedIn", "true");
