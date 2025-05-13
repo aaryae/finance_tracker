@@ -1,6 +1,6 @@
 import { LayoutDashboard, LogOut, Table } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SidebarMenu = ({
   navstate,
@@ -10,6 +10,16 @@ const SidebarMenu = ({
   setNavstate: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [active, setActive] = useState("Dashboard");
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("isLoggedIn");
+    // Optionally, navigate to the login page
+    navigate("/login");
+  };
 
   return (
     <>
@@ -24,15 +34,7 @@ const SidebarMenu = ({
         className={`md:ml-[5.2rem] bg-[#262626] h-screen fixed md:w-64 w-48 p-7 border-r border-[#ffffff27] transition-all duration-300 ease-in-out z-30 ${navstate ? "left-0" : "left-[-200%]"
           }`}
       >
-        {/* <div className="md:text-2xl text-xl text-white cursor-pointer flex justify-between">
-          <h1 className="">Dashboard</h1>
-          <div
-            className="rounded-full bg-[#ffffff1a] p-2"
-            onClick={() => setNavstate(!navstate)}
-          >
-            <ArrowLeft size={19} strokeWidth={0.5} absoluteStrokeWidth />
-          </div>
-        </div> */}
+
         <br />
         <nav className="flex flex-col gap-7 mt-10">
           <Link
@@ -53,26 +55,17 @@ const SidebarMenu = ({
           >
             <Table size={20} /> <span>Manage User</span>
           </Link>
-          <Link
-            to="/logout"
-            onClick={() => setActive("Logout")}
-            className={`flex items-center space-x-2 ${active === "Logout"
-              ? "text-white font-semibold"
-              : "text-gray-300"
+          <button
+            onClick={() => {
+              setActive("Logout");
+              handleLogout();
+            }}
+            className={`flex items-center space-x-2 ${active === "Logout" ? "text-white font-semibold" : "text-gray-300"
               } hover:text-white`}
           >
             <LogOut size={20} /> <span>Logout</span>
-          </Link>
-          {/* <Link
-            to="/admin"
-            onClick={() => setActive("admin")}
-            className={`flex items-center space-x-2 ${active === "UserProfile"
-              ? "text-white font-semibold"
-              : "text-gray-300"
-              } hover:text-white`}
-          >
-            <Magnet size={20} /> <span>admin</span>
-          </Link> */}
+          </button>
+
         </nav>
       </div>
     </>
