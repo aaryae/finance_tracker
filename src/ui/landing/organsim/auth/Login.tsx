@@ -1,9 +1,11 @@
 import video from "@assets/file.mp4";
 import { Formtype } from "@type/form.type";
 import axios, { AxiosError } from "axios";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
+
 // Yup schema
 const loginSchema = yup.object({
   email: yup
@@ -23,29 +25,69 @@ const LoginPage = () => {
     formState: { errors, isSubmitting },
   } = useForm<Formtype>();
 
+  // Function to refresh access token
+  const refreshAccessToken = async () => {
+    try {
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (!refreshToken) {
+        throw new Error("No refresh token available");
+      }
+
+      const res = await axios.post(
+        "http://localhost:9090/api/user/token/refreshToken",
+        { refreshToken }
+      );
+
+      const newAccessToken = res.data?.token;
+      if (newAccessToken) {
+        localStorage.setItem("accessToken", newAccessToken);
+        console.log("Access token refreshed");
+      } else {
+        throw new Error("Failed to obtain new access token");
+      }
+    } catch (error) {
+      console.error("Error refreshing access token:", error);
+      // Optionally, redirect to login page if refresh fails
+      navigate("/login", { replace: true });
+    }
+  };
+
+  // Set up interval to refresh token every 20 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshAccessToken();
+    }, 50 * 60 * 1000); // 50 minutes
+
+    return () => clearInterval(interval); // Clean up on unmount
+  }, []);
+
   const onSubmit: SubmitHandler<Formtype> = async (data) => {
     try {
       await loginSchema.validate(data, { abortEarly: false });
 
       const res = await axios.post(
         "http://localhost:9090/api/user/auth/sign-in",
-        data
+        data,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("isLoggedIn")}`,
+          },
+        }
       );
       const refreshToken = res.data?.refreshToken;
-      const token = res.data?.token;
+      const accessToken = res.data?.token;
       const role = res.data?.role;
 
-      // const encrypted = encrypt(token);
-      localStorage.setItem('refreshToken', refreshToken)
-      localStorage.setItem('isLoggedIn', token);
-      console.log(res)
+      localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("isLoggedIn", "true");
+
       alert("Login successful!");
-      if (role === 'ADMIN') {
-        navigate('/admin', { replace: true });  // Navigate to admin page
+      if (role === "ADMIN") {
+        navigate("/admin", { replace: true });
       } else {
-        navigate('/', { replace: true });
+        navigate("/", { replace: true });
       }
-      // console.log(res);
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         for (const issue of err.inner) {
