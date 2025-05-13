@@ -4,7 +4,6 @@ import axios, { AxiosError } from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-
 // Yup schema
 const loginSchema = yup.object({
   email: yup
@@ -32,9 +31,21 @@ const LoginPage = () => {
         "http://localhost:9090/api/user/auth/sign-in",
         data
       );
+      const refreshToken = res.data?.refreshToken;
+      const token = res.data?.token;
+      const role = res.data?.role;
+
+      // const encrypted = encrypt(token);
+      localStorage.setItem('refreshToken', refreshToken)
+      localStorage.setItem('isLoggedIn', token);
+      console.log(res)
       alert("Login successful!");
-      navigate("/");
-      console.log(res);
+      if (role === 'ADMIN') {
+        navigate('/admin', { replace: true });  // Navigate to admin page
+      } else {
+        navigate('/', { replace: true });
+      }
+      // console.log(res);
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         for (const issue of err.inner) {
@@ -93,6 +104,7 @@ const LoginPage = () => {
               </label>
               <input
                 {...register("email")}
+                autoComplete="on"
                 id="email"
                 type="email"
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80 transition"
@@ -112,6 +124,7 @@ const LoginPage = () => {
               </label>
               <input
                 {...register("password")}
+                autoComplete="off"
                 id="password"
                 type="password"
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80 transition"
