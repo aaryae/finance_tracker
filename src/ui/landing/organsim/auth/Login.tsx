@@ -76,6 +76,7 @@ const LoginPage = () => {
       const role = res.data?.role;
 
       localStorage.setItem("userId", userId);
+      console.log(userId);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("isLoggedIn", "true");

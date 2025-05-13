@@ -33,34 +33,41 @@ const Register = () => {
     reset,
   } = useForm<Formtype>();
 
-  const onSubmit: SubmitHandler<Formtype> = async (data) => {
-    try {
-      await registerSchema.validate(data, { abortEarly: false });
+ const onSubmit: SubmitHandler<Formtype> = async (data) => {
+  try {
+    // Validate with Yup
+    await registerSchema.validate(data, { abortEarly: false });
 
-      await axios.post("http://localhost:9090/api/user/auth/sign-up", data);
-      alert("Registration successful!");
-      reset();
-      navigate("/login");
-    } catch (err) {
-      if (err instanceof yup.ValidationError) {
-        err.inner.forEach((validationError) => {
-          if (validationError.path) {
-            setError(validationError.path as keyof Formtype, {
-              type: "manual",
-              message: validationError.message,
-            });
-          }
-        });
-        return;
-      }
+    // Make API call
+    await axios.post("http://localhost:9090/api/user/auth/sign-up", data);
 
-      const axiosError = err as AxiosError<{ message: string }>;
-      alert(
-        axiosError.response?.data?.message ||
-          "Registration failed. Please try again."
-      );
+    // Show success message related to email verification
+    alert("Registration successful! Please check your Gmail and verify your account before logging in.");
+
+    // Reset form and navigate
+    reset();
+    navigate("/login");
+  } catch (err) {
+    if (err instanceof yup.ValidationError) {
+      err.inner.forEach((validationError) => {
+        if (validationError.path) {
+          setError(validationError.path as keyof Formtype, {
+            type: "manual",
+            message: validationError.message,
+          });
+        }
+      });
+      return;
     }
-  };
+
+    const axiosError = err as AxiosError<{ message: string }>;
+    alert(
+      axiosError.response?.data?.message ||
+      "Registration failed. Please try again."
+    );
+  }
+};
+
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
