@@ -14,14 +14,14 @@ interface IncomeEntry {
 const Income = () => {
   const [incomeData, setIncomeData] = useState<IncomeEntry[]>([]);
   const userId = "2"; // Replace with dynamic ID if needed
+      const token = localStorage.getItem('accessToken');
 
   useEffect(() => {
     const fetchIncome = async () => {
-      const token = localStorage.getItem('accessToken');
 
       try {
         const res = await axios.get(
-          `http://localhost:9090/api/income/getAllIncome/${userId}`,
+          `http://localhost:8080/api/income/getAllIncome/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -42,18 +42,18 @@ const Income = () => {
     // You can open a modal or pre-fill a form
   };
 
-  // const handleDelete = async (id: number) => {
-  //   try {
-  //     await axios.delete(`http://localhost:55598/api/income/delete/${userId}/${id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  //     setIncomeData((prev) => prev.filter((e) => e.id !== id));
-  //   } catch (err) {
-  //     console.error("Failed to delete:", err);
-  //   }
-  // };
+  const handleDelete = async (id: number) => {
+    try {
+      await axios.get(`http://localhost:8080/api/income/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setIncomeData((prev) => prev.filter((e) => e.id !== id));
+    } catch (err) {
+      console.error("Failed to delete:", err);
+    }
+  };
 
   return (
     <div className="container mx-auto max-w-5xl">
@@ -65,8 +65,8 @@ const Income = () => {
         <Example />
       </div>
       <br />
-      <IncomeTable data={incomeData} />
-      {/* onDelete={handleDelete} */}
+      <IncomeTable data={incomeData}   onDelete={handleDelete}  />
+     
       {/* onEdit={handleEdit} */}
     </div>
   );
