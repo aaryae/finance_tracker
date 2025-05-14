@@ -13,12 +13,20 @@ interface ExpenseEntry {
 
 const Expense = () => {
   const [expenseData, setExpenseData] = useState<ExpenseEntry[]>([]);
-  const receiverId = "2"; // Replace with dynamic user/receiver ID
+  const receiverId = "2"; // Replace with dynamic ID
+  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const res = await axios.get(`http://localhost:55538/api/expenses/getAllExpenses/${receiverId}`);
+        const res = await axios.get(
+          `http://localhost:8080/api/expenses/getAllExpenses/${receiverId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setExpenseData(res.data);
       } catch (err) {
         console.error("Failed to fetch expenses:", err);
@@ -30,12 +38,16 @@ const Expense = () => {
 
   const handleEdit = (entry: ExpenseEntry) => {
     console.log("Edit clicked:", entry);
-    // Show edit form/modal
+    // Add edit modal logic if needed
   };
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`/api/expenses/delete/${receiverId}/${id}`);
+      await axios.get(`http://localhost:8080/api/expenses/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setExpenseData((prev) => prev.filter((e) => e.id !== id));
     } catch (err) {
       console.error("Delete failed:", err);
@@ -52,8 +64,7 @@ const Expense = () => {
         <Example />
       </div>
       <br />
-      <ExpenseTable data={expenseData}  onDelete={handleDelete} />
-      {/* onEdit={handleEdit} */}
+      <ExpenseTable data={expenseData} onDelete={handleDelete} />
     </div>
   );
 };

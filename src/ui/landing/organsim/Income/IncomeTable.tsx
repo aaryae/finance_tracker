@@ -30,7 +30,6 @@ const IncomeTable: React.FC<IncomeTableProps> = ({ data, onEdit, onDelete }) => 
           </tr>
         </thead>
         <tbody>
-          data
           {data.map((entry, index) => (
             <tr key={entry.id} className="hover:bg-[#333] transition duration-200 rounded-lg">
               <td className="px-4 py-2 border-t border-[#ffffff8a]">{index + 1}</td>
