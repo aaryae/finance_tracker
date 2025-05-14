@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import axios from "axios";
+import React, { useState } from "react";
 
 const AddIncome: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
@@ -11,7 +11,7 @@ const AddIncome: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const userId = localStorage.getItem("userId"); // Must be already stored in localStorage
-    console.log("this is userid",userId);
+    console.log("this is userid", userId);
     if (!userId) {
       setMessage("User ID not found.");
       return;
@@ -19,8 +19,8 @@ const AddIncome: React.FC = () => {
 
     const incomeData = {
       amount: parseFloat(amount),
-      remark: source.trim(),
-     
+      source: source.trim(),
+
     };
 
     try {
@@ -28,14 +28,10 @@ const AddIncome: React.FC = () => {
         const token = localStorage.getItem('accessToken');
      
       const res = await axios.post(
-          `http://localhost:9090/api/user/addIncome/${2}`,
-          incomeData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        `http://localhost:8080/api/user/addIncome/${2}`,
+        incomeData
+      );
+      console.log("not")
       setMessage("Income added successfully!");
       setAmount("");
       setSource("");
@@ -73,7 +69,7 @@ const AddIncome: React.FC = () => {
             />
           </div>
           <div>
-            
+
             <label className="text-white block mb-1">Source </label>
             <input
               type="text"
@@ -88,7 +84,7 @@ const AddIncome: React.FC = () => {
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl w-full"
             disabled={loading}
           >
-            {loading ? "Submitting..." : "Submit" }
+            {loading ? "Submitting..." : "Submit"}
           </button>
         </form>
       )}
