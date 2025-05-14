@@ -1,40 +1,52 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
+interface IUser {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string; // Adjust this if role is not a string
+  status: string;
+  income: number;
+  expenses: number;
+}
 const AdminTable = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [users, setUsers] = useState<IUser[]>([]); // Specify a type for users, such as { firstName: string, lastName: string, ... }
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // console.log('sakjfsdlkf')
+
         const response = await axios.get('http://localhost:9090/api/user/getAll', {
           headers: {
-            Authorization: ` ${localStorage.getItem('accessToken')}`,
+            Authorization: `${localStorage.getItem('accessToken')}`,
           },
         });
-        console.log(response)
         setUsers(response.data);
+        // console.log('ram')
+        console.log(response);
+
       } catch (err) {
-        setError('Failed to fetch data');
-        console.error(err);
-      } finally {
-        setLoading(false);
+        console.log('sdkfjbdskjfskdjfhdskjfb')
+
+        console.log(err)
       }
     };
 
     fetchData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+
 
   return (
     <div className="bg-[#262626] flex flex-col items-center justify-center text-white p-4 rounded-xl max-w-fit h-full mx-10">
       <div className="flex w-full justify-between">
         <h2 className="text-xl font-semibold mb-4">Recent Transactions</h2>
-        <a className="underline" href="#">more</a>
+
       </div>
       <table className="w-full text-left border-separate border-spacing-y-2">
         <thead>
@@ -53,21 +65,25 @@ const AdminTable = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
-            <tr key={user.email} className="hover:bg-[#333] transition duration-200 rounded-lg">
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{index + 1}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.firstName}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.LastName}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.email}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.income}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.expenditure}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.role}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.view}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.edit}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.delete}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.status}</td>
-            </tr>
-          ))}
+          {users.map((user, index) => {
+            // const { firstName, lastName, email, income, expenses, role, status } = user;
+
+            return (
+              <tr key={user.id} className="hover:bg-[#333] transition duration-200 rounded-lg">
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{index + 1}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.firstName}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.lastName}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.email}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.income || 'N/A'}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.expenses || 'N/A'}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.role}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.status}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">view</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">edit</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">delete</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
