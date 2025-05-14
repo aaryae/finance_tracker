@@ -19,18 +19,23 @@ const AddIncome: React.FC = () => {
 
     const incomeData = {
       amount: parseFloat(amount),
-      source: source.trim(),
+      remark: source.trim(),
      
     };
 
     try {
       setLoading(true);
-      console.log("it's happening")
+        const token = localStorage.getItem('accessToken');
+     
       const res = await axios.post(
-        `http://localhost:9090/api/user/addIncome/${2}`,
-        incomeData
-      );
-      console.log("not")
+          `http://localhost:9090/api/user/addIncome/${2}`,
+          incomeData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       setMessage("Income added successfully!");
       setAmount("");
       setSource("");
