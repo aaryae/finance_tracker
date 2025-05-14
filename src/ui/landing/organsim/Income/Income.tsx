@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import AddIncome from "./AddIncome";
 import Example from "./Example";
 import IncomeTable from "./IncomeTable";
@@ -17,11 +17,11 @@ const Income = () => {
 
   useEffect(() => {
     const fetchIncome = async () => {
-        const token = localStorage.getItem('accessToken');
+      const token = localStorage.getItem('accessToken');
 
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/income/getById/${userId}`,
+          `http://localhost:9090/api/income/getAllIncome/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
