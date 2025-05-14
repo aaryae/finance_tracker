@@ -26,7 +26,7 @@ const AddIncome: React.FC = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `/api/user/addIncome/${userId}`,
+        `http://localhost:9090/api/user/addIncome/${2}`,
         incomeData
       );
       setMessage("Income added successfully!");

@@ -78,6 +78,7 @@ const LoginPage = () => {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("isLoggedIn", "true");
 
+
       alert("Login successful!");
       navigate(role === "ADMIN" ? "/admin" : "/", { replace: true });
     } catch (err) {

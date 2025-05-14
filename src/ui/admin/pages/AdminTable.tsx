@@ -21,9 +21,11 @@ const AdminTable = () => {
       try {
         // console.log('sakjfsdlkf')
 
-        const response = await axios.get('http://localhost:9090/api/user/getAll', {
+
+        const token =localStorage.getItem('accessToken');
+        const response = await axios.get('http://localhost:9090/api/user/admin/getAll', {
           headers: {
-            Authorization: `${localStorage.getItem('accessToken')}`,
+            Authorization:  `Bearer ${token}`,
           },
         });
         setUsers(response.data);
@@ -31,8 +33,6 @@ const AdminTable = () => {
         console.log(response);
 
       } catch (err) {
-        console.log('sdkfjbdskjfskdjfhdskjfb')
-
         console.log(err)
       }
     };
