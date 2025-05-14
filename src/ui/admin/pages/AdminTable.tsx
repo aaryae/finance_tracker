@@ -20,8 +20,6 @@ const AdminTable = () => {
     const fetchData = async () => {
       try {
         // console.log('sakjfsdlkf')
-
-
         const token = localStorage.getItem('accessToken');
         const response = await axios.get('http://localhost:9090/api/user/admin/getAll', {
           headers: {
