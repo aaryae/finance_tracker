@@ -10,7 +10,7 @@ const Topbar = ({
   setNavstate: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [messagestate, setMessagestate] = useState(false);
-  const [profilestate, setProfilestate] = useState(false);
+  // const [profilestate, setProfilestate] = useState(false);
 
   return (
     <>
