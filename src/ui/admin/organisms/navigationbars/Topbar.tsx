@@ -1,5 +1,4 @@
 import {
-  Activity,
   AlignLeft,
   X
 } from "lucide-react";
@@ -11,7 +10,7 @@ const Topbar = ({
   setNavstate: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [messagestate, setMessagestate] = useState(false);
-  const [profilestate, setProfilestate] = useState(false);
+  // const [profilestate, setProfilestate] = useState(false);
 
   return (
     <>
@@ -50,7 +49,7 @@ const Topbar = ({
             </div>
           </div>
 
-          <div
+          {/* <div
             className="p-3 rounded-full bg-[#188502] relative cursor-pointer"
             onClick={() => {
               setProfilestate(!profilestate);
@@ -76,7 +75,7 @@ const Topbar = ({
                 </a>
               </nav>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

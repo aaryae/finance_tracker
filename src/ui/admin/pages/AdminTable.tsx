@@ -71,6 +71,7 @@ const AdminTable = () => {
           user.id === id ? { ...user, status: 'DELETE' } : user
         )
       );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Delete Error:", err);
       alert(err?.response?.data?.message || "Something went wrong while deleting the user.");
@@ -80,20 +81,18 @@ const AdminTable = () => {
 
   return (
     <div className="bg-[#262626] text-white p-4 rounded-xl mx-4 md:mx-10 overflow-x-auto">
-      <h2 className="text-xl font-semibold mb-4 text-center md:text-left">
-        Recent Transactions
+      <h2 className=" flex justify-center text-2xl font-semibold mb-4 text-center md:text-left">
+        Admin Table
       </h2>
 
       <div className="overflow-x-auto w-full">
-        <table className="min-w-[800px] w-full text-left border-separate border-spacing-y-2">
+        <table className="min-w-[800px] w-full text-center border-separate border-spacing-y-2">
           <thead>
             <tr className="text-gray-400 text-sm">
               <th className="px-4 py-2">S.N.</th>
               <th className="px-4 py-2">First Name</th>
               <th className="px-4 py-2">Last Name</th>
               <th className="px-4 py-2">Email</th>
-              <th className="px-4 py-2">Income</th>
-              <th className="px-4 py-2">Expenditure</th>
               <th className="px-4 py-2">Role</th>
               <th className="px-4 py-2">Status</th>
               <th className="px-4 py-2">View</th>
@@ -107,8 +106,6 @@ const AdminTable = () => {
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.firstname}</td>
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.lastname}</td>
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.email}</td>
-                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.income || 'N/A'}</td>
-                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.expenses || 'N/A'}</td>
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.role}</td>
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">
                   <span
@@ -129,7 +126,7 @@ const AdminTable = () => {
                   View
                 </td>
                 <td
-                  className="px-4 py-2 border-t border-[#ffffff8a] cursor-pointer text-red-400 hover:underline"
+                  className=" flex justify-center px-4 py-2 border-t border-[#ffffff8a]  cursor-pointer text-red-400 hover:underline"
 
                 >
                   <Trash2 onClick={() => handleDelete(user.id)} />
@@ -143,9 +140,9 @@ const AdminTable = () => {
       {/* Modal for viewing user details */}
       {showModal && selectedUser && (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-          <div className="bg-[#1e1e1e] p-6 rounded-xl w-[90%] max-w-md text-white relative">
+          <div className="bg-[#1e1e1e] py-6 px-10 rounded-xl w-[90%] max-w-md text-white relative">
             <button
-              className="absolute top-2 right-2 text-gray-400 hover:text-white"
+              className="absolute top-2 right-2 text-gray-400 cursor-pointer hover:text-red-700"
               onClick={() => setShowModal(false)}
             >
               ✕
@@ -177,11 +174,10 @@ const AdminTable = () => {
                   {selectedUser.status}
                 </span>
               </p>
-              <p className="text-gray-400">Income:</p>
-              <p>{selectedUser.income}</p>
-              <p className="text-gray-400">Expenses:</p>
-              <p>{selectedUser.expenses}</p>
+
+
             </div>
+
           </div>
         </div>
       )}
