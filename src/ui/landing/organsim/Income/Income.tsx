@@ -1,21 +1,60 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import AddIncome from "./AddIncome";
 import Example from "./Example";
 import IncomeTable from "./IncomeTable";
 
+interface IncomeEntry {
+  id: number;
+  remark: string;
+  amount: number;
+  userId: number;
+}
+
 const Income = () => {
+  const [incomeData, setIncomeData] = useState<IncomeEntry[]>([]);
+  const userId = "2"; // You can dynamically fetch this
+
+  useEffect(() => {
+    const fetchIncome = async () => {
+      try {
+        const res = await axios.get(`http://localhost:55598/api/income/getById/${userId}`);
+        setIncomeData(res.data);
+      } catch (err) {
+        console.error("Failed to fetch income data:", err);
+      }
+    };
+
+    fetchIncome();
+  }, [userId]);
+
+  const handleEdit = (entry: IncomeEntry) => {
+    console.log("Edit clicked:", entry);
+    // You can open a modal or pre-fill a form
+  };
+
+  // const handleDelete = async (id: number) => {
+  //   try {
+  //     await axios.delete(`/api/user/deleteIncome/${userId}/${id}`);
+  //     setIncomeData((prev) => prev.filter((e) => e.id !== id));
+  //   } catch (err) {
+  //     console.error("Failed to delete:", err);
+  //   }
+  // };
+
   return (
-    <div className=" container mx-auto max-w-5xl  ">
-      <AddIncome/>
-      {/* line chart */}
+    <div className="container mx-auto max-w-5xl">
+      <AddIncome />
       <div className="bg-[#262626] px-10 py-4 rounded-3xl">
-        <h1 className="my-2  text-3xl py-4 tracking-wide uppercase text-white text-center bg-[#262626] px-10 rounded-3xl">
-          Chart showing Income{" "}
+        <h1 className="my-2 text-3xl py-4 tracking-wide uppercase text-white text-center">
+          Chart showing Income
         </h1>
-        <br />
         <Example />
       </div>
       <br />
-      <IncomeTable />
+      <IncomeTable data={incomeData}   />
+      {/* onDelete={handleDelete} */}
+      {/* onEdit={handleEdit} */}
     </div>
   );
 };

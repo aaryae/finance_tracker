@@ -1,21 +1,18 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-interface IncomeEntry {
+interface ExpenseEntry {
   id: number;
   remark: string;
   amount: number;
 }
 
-interface IncomeTableProps {
-  data: IncomeEntry[];
-  onEdit?: (entry: IncomeEntry) => void;
+interface ExpenseTableProps {
+  data: ExpenseEntry[];
+  onEdit?: (entry: ExpenseEntry) => void;
   onDelete?: (id: number) => void;
 }
 
-//  below should be in props field
-
-// { data, onEdit, onDelete }
-const IncomeTable: React.FC<IncomeTableProps> = () => {
+const ExpenseTable: React.FC<ExpenseTableProps> = ({ data, onEdit, onDelete }) => {
   return (
     <div className="bg-[#262626] text-white p-4 rounded-xl w-full">
       <div className="flex w-full justify-between">
@@ -32,8 +29,7 @@ const IncomeTable: React.FC<IncomeTableProps> = () => {
           </tr>
         </thead>
         <tbody>
-          data
-          {/* {data.map((entry, index) => (
+          {data.map((entry, index) => (
             <tr key={entry.id} className="hover:bg-[#333] transition duration-200 rounded-lg">
               <td className="px-4 py-2 border-t border-[#ffffff8a]">{index + 1}</td>
               <td className="px-4 py-2 border-t border-[#ffffff8a]">{entry.remark}</td>
@@ -51,11 +47,11 @@ const IncomeTable: React.FC<IncomeTableProps> = () => {
                 </div>
               </td>
             </tr>
-          ))} */}
+          ))}
         </tbody>
       </table>
     </div>
   );
 };
 
-export default IncomeTable;
+export default ExpenseTable;

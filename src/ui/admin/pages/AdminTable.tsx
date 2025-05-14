@@ -2,8 +2,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 interface IUser {
   id: string;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   email: string;
   role: string; // Adjust this if role is not a string
   status: string;
@@ -20,10 +20,10 @@ const AdminTable = () => {
     const fetchData = async () => {
       try {
         // console.log('sakjfsdlkf')
-
-        const response = await axios.get('http://localhost:9090/api/user/getAll', {
+        const token = localStorage.getItem('accessToken');
+        const response = await axios.get('http://localhost:9090/api/user/admin/getAll', {
           headers: {
-            Authorization: `${localStorage.getItem('accessToken')}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         setUsers(response.data);
@@ -31,8 +31,6 @@ const AdminTable = () => {
         console.log(response);
 
       } catch (err) {
-        console.log('sdkfjbdskjfskdjfhdskjfb')
-
         console.log(err)
       }
     };
@@ -71,8 +69,8 @@ const AdminTable = () => {
             return (
               <tr key={user.id} className="hover:bg-[#333] transition duration-200 rounded-lg">
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">{index + 1}</td>
-                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.firstName}</td>
-                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.lastName}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.firstname}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.lastname}</td>
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.email}</td>
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.income || 'N/A'}</td>
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.expenses || 'N/A'}</td>
