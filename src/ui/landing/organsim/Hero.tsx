@@ -80,7 +80,7 @@ const Hero = () => {
         </div>
         <div className="w-full lg:w-1/4 flex flex-col justify-center gap-4 bg-[#262626] rounded-3xl max-h-fit sticky top-12 my-3 mx-7">
           <ProfitCard />
-          <AnalyticsHighExpense />
+<AnalyticsHighExpense data={expenseData} />
         </div>
       </div>
     </div>

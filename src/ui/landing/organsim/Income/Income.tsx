@@ -8,9 +8,9 @@ import { IncomeEntry } from "@type/income.type";
 const Income = () => {
   const [incomeData, setIncomeData] = useState<IncomeEntry[]>([]);
   const [editing, setEditing] = useState<IncomeEntry | null>(null);
-  const [editRemark, setEditRemark] = useState("");
+  const [editSource, setEditSource] = useState(""); // ✅ renamed for consistency
   const [editAmount, setEditAmount] = useState("");
-  const userId = "2"; // Replace with dynamic user if needed
+  const userId = "2";
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const Income = () => {
 
   const handleEdit = (entry: IncomeEntry) => {
     setEditing(entry);
-    setEditRemark(entry.remark);
+    setEditSource(entry.remark); // ✅ Set the current remark (source)
     setEditAmount(entry.amount.toString());
   };
 
@@ -44,9 +44,9 @@ const Income = () => {
 
     try {
       await axios.post(
-        `http://localhost:8080/api/income/update/${editing.id}`, 
+        `http://localhost:8080/api/income/update/${editing.id}`,
         {
-          remark: editRemark,
+          source: editSource, // ✅ match backend naming
           amount: parseFloat(editAmount),
         },
         {
@@ -56,17 +56,16 @@ const Income = () => {
         }
       );
 
-      // Update UI state
       setIncomeData((prev) =>
         prev.map((e) =>
           e.id === editing.id
-            ? { ...e, remark: editRemark, amount: parseFloat(editAmount) }
+            ? { ...e, remark: editSource, amount: parseFloat(editAmount) }
             : e
         )
       );
 
       setEditing(null);
-      setEditRemark("");
+      setEditSource("");
       setEditAmount("");
     } catch (err) {
       console.error("Update failed:", err);
@@ -93,7 +92,7 @@ const Income = () => {
         <h1 className="my-2 text-3xl py-4 tracking-wide uppercase text-white text-center">
           Chart showing Income
         </h1>
-<Example data={incomeData} />
+        <Example data={incomeData} />
       </div>
       <br />
       <IncomeTable
@@ -107,11 +106,11 @@ const Income = () => {
         <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-[#000000a2] bg-opacity-60 z-50">
           <div className="bg-[#1e1e1e] p-6 rounded-xl shadow-xl w-96 text-white">
             <h2 className="text-xl font-semibold mb-4">Edit Income</h2>
-            <label className="block mb-2">Remark</label>
+            <label className="block mb-2">Source</label>
             <input
               className="w-full px-3 py-2 mb-4 rounded bg-[#2e2e2e] border border-gray-600"
-              value={editRemark}
-              onChange={(e) => setEditRemark(e.target.value)}
+              value={editSource}
+              onChange={(e) => setEditSource(e.target.value)}
             />
             <label className="block mb-2">Amount</label>
             <input
