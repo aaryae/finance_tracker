@@ -4,6 +4,7 @@ interface ExpenseEntry {
   id: number;
   remark: string;
   amount: number;
+
 }
 
 interface ExpenseTableProps {

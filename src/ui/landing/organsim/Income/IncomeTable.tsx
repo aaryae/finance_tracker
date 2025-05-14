@@ -1,17 +1,11 @@
+import { IncomeEntry } from "@type/income.type";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
-interface IncomeEntry {
-  id: number;
-  remark: string;
-  amount: number;
-}
 
 interface IncomeTableProps {
   data: IncomeEntry[];
   onEdit?: (entry: IncomeEntry) => void;
   onDelete?: (id: number) => void;
 }
-
 
 const IncomeTable: React.FC<IncomeTableProps> = ({ data, onEdit, onDelete }) => {
   return (
