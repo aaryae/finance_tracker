@@ -1,24 +1,52 @@
-const data = [
-  { firstName: 'Srijan', LastName: 'Shrestha', email: 'srijan@gmail.com', income: 'income', expenditure: 'expenditure', role: 'user', view: 'view', edit: 'edit', delete: 'delete', status: 'status' },
-  { firstName: 'Srijan', LastName: 'Shrestha', email: 'srijan@gmail.com', income: 'income', expenditure: 'expenditure', role: 'user', view: 'view', edit: 'edit', delete: 'delete', status: 'status' },
-  { firstName: 'Srijan', LastName: 'Shrestha', email: 'srijan@gmail.com', income: 'income', expenditure: 'expenditure', role: 'user', view: 'view', edit: 'edit', delete: 'delete', status: 'status' },
-  { firstName: 'Srijan', LastName: 'Shrestha', email: 'srijan@gmail.com', income: 'income', expenditure: 'expenditure', role: 'user', view: 'view', edit: 'edit', delete: 'delete', status: 'status' },
-  { firstName: 'Srijan', LastName: 'Shrestha', email: 'srijan@gmail.com', income: 'income', expenditure: 'expenditure', role: 'user', view: 'view', edit: 'edit', delete: 'delete', status: 'status' },
-  { firstName: 'Srijan', LastName: 'Shrestha', email: 'srijan@gmail.com', income: 'income', expenditure: 'expenditure', role: 'user', view: 'view', edit: 'edit', delete: 'delete', status: 'status' },
-  { firstName: 'Srijan', LastName: 'Shrestha', email: 'srijan@gmail.com', income: 'income', expenditure: 'expenditure', role: 'user', view: 'view', edit: 'edit', delete: 'delete', status: 'status' },
-  { firstName: 'Srijan', LastName: 'Shrestha', email: 'srijan@gmail.com', income: 'income', expenditure: 'expenditure', role: 'user', view: 'view', edit: 'edit', delete: 'delete', status: 'status' },
-  { firstName: 'Srijan', LastName: 'Shrestha', email: 'srijan@gmail.com', income: 'income', expenditure: 'expenditure', role: 'user', view: 'view', edit: 'edit', delete: 'delete', status: 'status' },
-
-];
-
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+interface IUser {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string; // Adjust this if role is not a string
+  status: string;
+  income: number;
+  expenses: number;
+}
 const AdminTable = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [users, setUsers] = useState<IUser[]>([]); // Specify a type for users, such as { firstName: string, lastName: string, ... }
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // console.log('sakjfsdlkf')
+
+        const response = await axios.get('http://localhost:9090/api/user/getAll', {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        });
+        setUsers(response.data);
+        // console.log('ram')
+        console.log(response);
+
+      } catch (err) {
+        console.log('sdkfjbdskjfskdjfhdskjfb')
+
+        console.log(err)
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+
   return (
-    <div className="bg-[#262626] flex flex-col items-center justify-center text-white p-4 rounded-xl max-w-fit h-full  mx-10   ">
+    <div className="bg-[#262626] flex flex-col items-center justify-center text-white p-4 rounded-xl max-w-fit h-full mx-10">
       <div className="flex w-full justify-between">
         <h2 className="text-xl font-semibold mb-4">Recent Transactions</h2>
-        <a className="underline" href="#">
-          more
-        </a>
+
       </div>
       <table className="w-full text-left border-separate border-spacing-y-2">
         <thead>
@@ -37,34 +65,25 @@ const AdminTable = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((entry, index) => (
-            <tr
-              key={index}
-              className="hover:bg-[#333] transition duration-200 rounded-lg"
-            >
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">
-                {index + 1}
-              </td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">
-                {entry.firstName}
-              </td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">
-                {entry.LastName}
-              </td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">
-                {entry.email}
-              </td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">
-                {entry.income}
-              </td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">
-                {entry.expenditure}
-              </td>
-              {/* <td className="px-4 py-2 border-t border-[#ffffff8a]">
-                ${entry.amount.toFixed(2)}
-              </td> */}
-            </tr>
-          ))}
+          {users.map((user, index) => {
+            // const { firstName, lastName, email, income, expenses, role, status } = user;
+
+            return (
+              <tr key={user.id} className="hover:bg-[#333] transition duration-200 rounded-lg">
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{index + 1}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.firstName}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.lastName}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.email}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.income || 'N/A'}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.expenses || 'N/A'}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.role}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.status}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">view</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">edit</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">delete</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

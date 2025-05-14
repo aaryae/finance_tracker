@@ -4,7 +4,7 @@ import IncomeTable from "./IncomeTable";
 
 const Income = () => {
   return (
-    <div className=" container mx-auto max-w-5xl ">
+    <div className=" container mx-auto max-w-5xl  ">
       <AddIncome/>
       {/* line chart */}
       <div className="bg-[#262626] px-10 py-4 rounded-3xl">

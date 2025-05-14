@@ -1,7 +1,8 @@
 import video from "@assets/file.mp4";
 import { Formtype } from "@type/form.type";
 import axios, { AxiosError } from "axios";
-import { useEffect } from "react";
+import { Eye, EyeClosed } from "lucide-react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
@@ -17,6 +18,7 @@ const loginSchema = yup.object({
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false); // 👁️ Toggle state
 
   const {
     register,
@@ -29,9 +31,7 @@ const LoginPage = () => {
   const refreshAccessToken = async () => {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
-      if (!refreshToken) {
-        throw new Error("No refresh token available");
-      }
+      if (!refreshToken) throw new Error("No refresh token available");
 
       const res = await axios.post(
         "http://localhost:9090/api/user/token/refreshToken",
@@ -47,18 +47,16 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.error("Error refreshing access token:", error);
-      // Optionally, redirect to login page if refresh fails
       navigate("/login", { replace: true });
     }
   };
 
-  // Set up interval to refresh token every 20 seconds
+  // Refresh token every 50 minutes
   useEffect(() => {
     const interval = setInterval(() => {
       refreshAccessToken();
-    }, 50 * 60 * 1000); // 50 minutes
-
-    return () => clearInterval(interval); // Clean up on unmount
+    }, 50 * 60 * 1000);
+    return () => clearInterval(interval);
   }, []);
 
   const onSubmit: SubmitHandler<Formtype> = async (data) => {
@@ -69,7 +67,7 @@ const LoginPage = () => {
         "http://localhost:9090/api/user/auth/sign-in",
         data
       );
-      console.log(res)
+
       const userId = res.data?.userId;
       const refreshToken = res.data?.refreshToken;
       const accessToken = res.data?.token;
@@ -81,11 +79,7 @@ const LoginPage = () => {
       localStorage.setItem("isLoggedIn", "true");
 
       alert("Login successful!");
-      if (role === "ADMIN") {
-        navigate("/admin", { replace: true });
-      } else {
-        navigate("/", { replace: true });
-      }
+      navigate(role === "ADMIN" ? "/admin" : "/", { replace: true });
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         for (const issue of err.inner) {
@@ -106,14 +100,14 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="relative w-full h-screen ">
+    <div className="relative w-full h-screen">
       {/* Background Video */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute top-[50%] left-[50%] w-full  object-cover -translate-x-1/2 -translate-y-1/2 z-[-1] opacity-60"
+        className="absolute top-[50%] left-[50%] w-full object-cover -translate-x-1/2 -translate-y-1/2 z-[-1] opacity-60"
       >
         <source src={video} type="video/mp4" />
         Your browser does not support the video tag.
@@ -154,7 +148,7 @@ const LoginPage = () => {
               )}
             </div>
 
-            {/* Password */}
+            {/* Password with eye toggle */}
             <div className="flex flex-col space-y-2">
               <label
                 htmlFor="password"
@@ -162,13 +156,22 @@ const LoginPage = () => {
               >
                 Password <span className="text-red-700">*</span>
               </label>
-              <input
-                {...register("password")}
-                autoComplete="off"
-                id="password"
-                type="password"
-                className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80 transition"
-              />
+              <div className="relative">
+                <input
+                  {...register("password")}
+                  autoComplete="off"
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  className="px-4 py-2 pr-10 w-full rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80 transition"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-sm focus:outline-none"
+                >
+                  {showPassword ?   <EyeClosed/>: <Eye/>}
+                </button>
+              </div>
               {errors.password && (
                 <p className="text-red-400 text-xs">
                   {errors.password.message}
@@ -177,7 +180,7 @@ const LoginPage = () => {
             </div>
 
             {/* Forgot Password */}
-            <div className="flex  -mt-2">
+            <div className="flex -mt-2">
               <Link
                 to="/forgot-password"
                 className="text-white text-xs underline hover:text-gray-300 transition"

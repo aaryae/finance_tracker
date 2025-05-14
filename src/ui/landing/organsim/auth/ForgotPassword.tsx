@@ -1,5 +1,6 @@
 import video from "@assets/file.mp4";
 import axios, { AxiosError } from "axios";
+import { Eye, EyeClosed } from "lucide-react"; // 👁️ Eye toggle
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -8,6 +9,7 @@ import * as yup from "yup";
 type ForgotPasswordForm = {
   email: string;
   password: string;
+  confirmPassword: string;
 };
 
 const forgotPasswordSchema = yup.object({
@@ -16,11 +18,16 @@ const forgotPasswordSchema = yup.object({
     .string()
     .required("New password is required")
     .min(6, "Password must be at least 6 characters"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "Passwords do not match")
+    .required("Please confirm your password"),
 });
 
 const ForgotPasswordPage = () => {
-  //   const navigate = useNavigate();
   const [info, setInfo] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register,
@@ -33,19 +40,19 @@ const ForgotPasswordPage = () => {
     try {
       await forgotPasswordSchema.validate(data, { abortEarly: false });
 
-      await axios.post(
-        "http://localhost:9090/api/user/auth/forgot-password",
-        data
-      );
+      await axios.post("http://localhost:9090/api/user/auth/forgot-password", {
+        email: data.email,
+        password: data.password,
+      });
+
       setInfo("Verification email has been sent. Please check your inbox.");
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         for (const issue of err.inner) {
-          if (issue.path === "email") {
-            setError("email", { type: "manual", message: issue.message });
-          } else if (issue.path === "password") {
-            setError("password", { type: "manual", message: issue.message });
-          }
+          setError(issue.path as keyof ForgotPasswordForm, {
+            type: "manual",
+            message: issue.message,
+          });
         }
         return;
       }
@@ -108,22 +115,54 @@ const ForgotPasswordPage = () => {
 
             {/* New Password */}
             <div className="flex flex-col space-y-2">
-              <label
-                htmlFor="password"
-                className="text-white text-sm font-medium"
-              >
+              <label htmlFor="password" className="text-white text-sm font-medium">
                 New Password <span className="text-red-600">*</span>
               </label>
-              <input
-                {...register("password")}
-                id="password"
-                type="password"
-                className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
-              />
+              <div className="relative">
+                <input
+                  {...register("password")}
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  className="px-4 py-2 pr-10 w-full rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+                >
+                  {showPassword ? <EyeClosed /> : <Eye />}
+                </button>
+              </div>
               {errors.password && (
-                <p className="text-red-400 text-xs">
-                  {errors.password.message}
-                </p>
+                <p className="text-red-400 text-xs">{errors.password.message}</p>
+              )}
+            </div>
+
+            {/* Confirm Password */}
+            <div className="flex flex-col space-y-2">
+              <label
+                htmlFor="confirmPassword"
+                className="text-white text-sm font-medium"
+              >
+                Confirm Password <span className="text-red-600">*</span>
+              </label>
+              <div className="relative">
+                <input
+                  {...register("confirmPassword")}
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  className="px-4 py-2 pr-10 w-full rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+                >
+                  {showConfirmPassword ? <EyeClosed /> : <Eye />}
+                </button>
+              </div>
+              {errors.confirmPassword && (
+                <p className="text-red-400 text-xs">{errors.confirmPassword.message}</p>
               )}
             </div>
 
