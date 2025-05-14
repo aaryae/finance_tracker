@@ -7,7 +7,7 @@ const AddExpense= () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("Income added:", { amount, source });
+    console.log("Expense added:", { amount, source });
     // Reset
     setAmount("");
     setSource("");
@@ -22,7 +22,7 @@ const AddExpense= () => {
           onClick={() => setShowForm((prev) => !prev)}
           className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl transition duration-200"
         >
-          {showForm ? "Cancel" : "Add Income"}
+          {showForm ? "Cancel" : "Add Expense"}
         </button>
       </div>
 

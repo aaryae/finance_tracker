@@ -11,7 +11,7 @@ const AddIncome: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const userId = localStorage.getItem("userId"); // Must be already stored in localStorage
-
+    console.log("this is userid",userId);
     if (!userId) {
       setMessage("User ID not found.");
       return;
@@ -20,7 +20,7 @@ const AddIncome: React.FC = () => {
     const incomeData = {
       amount: parseFloat(amount),
       source: source.trim(),
-      date: new Date().toISOString() // Optional: depends on your backend model
+     
     };
 
     try {
@@ -66,7 +66,8 @@ const AddIncome: React.FC = () => {
             />
           </div>
           <div>
-            <label className="text-white block mb-1">Source</label>
+            
+            <label className="text-white block mb-1">Source </label>
             <input
               type="text"
               value={source}
@@ -80,7 +81,7 @@ const AddIncome: React.FC = () => {
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl w-full"
             disabled={loading}
           >
-            {loading ? "Submitting..." : "Submit"}
+            {loading ? "Submitting..." : "Submit" }
           </button>
         </form>
       )}

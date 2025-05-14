@@ -1,4 +1,4 @@
-import React from "react";
+
 import {
   Area,
   AreaChart,
@@ -26,7 +26,7 @@ const data: ChartData[] = [
   { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
 ];
 
-const Example: React.FC = () => {
+const Example = () => {
   return (
     <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
@@ -38,7 +38,7 @@ const Example: React.FC = () => {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#4b5bd1" />
+          <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#155DFC" />
         </AreaChart>
       </ResponsiveContainer>
     </div>
