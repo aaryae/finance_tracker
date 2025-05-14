@@ -76,10 +76,10 @@ const LoginPage = () => {
       localStorage.setItem("userId", userId);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("role", role)
 
 
-      alert("Login successful!");
+      // alert("Login successful!");
       navigate(role === "ADMIN" ? "/admin" : "/", { replace: true });
     } catch (err) {
       if (err instanceof yup.ValidationError) {
@@ -170,7 +170,7 @@ const LoginPage = () => {
                   onClick={() => setShowPassword((prev) => !prev)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-sm focus:outline-none"
                 >
-                  {showPassword ?   <EyeClosed/>: <Eye/>}
+                  {showPassword ? <EyeClosed /> : <Eye />}
                 </button>
               </div>
               {errors.password && (

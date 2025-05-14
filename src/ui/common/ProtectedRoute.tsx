@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = () => {
-  const token = localStorage.getItem("isLoggedIn");
-  const isLoggedIn = !!token; // check if token exists
+  const token = localStorage.getItem("accessToken");
+  const role = localStorage.getItem("role");
 
-  return isLoggedIn ? <Outlet /> : <Navigate to="/login" />;
+  return token && role === "USER" ? <Outlet /> : <Navigate to="/admin" replace />;
 };
 
 export default ProtectedRoute;
