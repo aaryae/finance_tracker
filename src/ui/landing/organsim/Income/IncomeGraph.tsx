@@ -1,4 +1,3 @@
-
 import {
   Area,
   AreaChart,
@@ -8,30 +7,24 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { IncomeEntry } from "@type/income.type";
 
-type ChartData = {
-  name: string;
-  uv: number;
-  pv: number;
-  amt: number;
-};
+interface Props {
+  data: IncomeEntry[];
+}
 
-const data: ChartData[] = [
-  { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
-  { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
-  { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
-  { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
-  { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
-  { name: "Page F", uv: 2390, pv: 3800, amt: 2500 },
-  { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
-];
+const IncomeGraph: React.FC<Props> = ({ data }) => {
+  // Transform income data to chart format
+  const chartData = data.map((entry, index) => ({
+    name: `Income ${index + 1}`, // You can also use remark if you prefer
+    uv: entry.amount,
+  }));
 
-const Example = () => {
   return (
     <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
         <AreaChart
-          data={data}
+          data={chartData}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
@@ -45,4 +38,4 @@ const Example = () => {
   );
 };
 
-export default Example;
+export default IncomeGraph;

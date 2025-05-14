@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Example from "../Income/Example";
+import ExpenseGraph from "./ExpenseGraph"; // ✅ updated import
 import ExpenseTable from "./ExpenseTable";
 import AddExpense from "./AddExpense";
 
@@ -13,7 +13,7 @@ interface ExpenseEntry {
 
 const Expense = () => {
   const [expenseData, setExpenseData] = useState<ExpenseEntry[]>([]);
-  const receiverId = "2"; // Replace with dynamic ID
+  const receiverId = "2";
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -38,7 +38,6 @@ const Expense = () => {
 
   const handleEdit = (entry: ExpenseEntry) => {
     console.log("Edit clicked:", entry);
-    // Add edit modal logic if needed
   };
 
   const handleDelete = async (id: number) => {
@@ -61,7 +60,7 @@ const Expense = () => {
         <h1 className="my-2 text-3xl py-4 tracking-wide uppercase text-white text-center">
           Chart showing Expenditure
         </h1>
-        <Example />
+        <ExpenseGraph data={expenseData} /> {/* ✅ added graph */}
       </div>
       <br />
       <ExpenseTable data={expenseData} onDelete={handleDelete} />
