@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import axios from "axios";
+import React, { useState } from "react";
 
 const AddIncome: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
@@ -11,7 +11,7 @@ const AddIncome: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const userId = localStorage.getItem("userId"); // Must be already stored in localStorage
-    console.log("this is userid",userId);
+    console.log("this is userid", userId);
     if (!userId) {
       setMessage("User ID not found.");
       return;
@@ -20,14 +20,14 @@ const AddIncome: React.FC = () => {
     const incomeData = {
       amount: parseFloat(amount),
       source: source.trim(),
-     
+
     };
 
     try {
       setLoading(true);
       console.log("it's happening")
       const res = await axios.post(
-        `http://localhost:9090/api/user/addIncome/${2}`,
+        `http://localhost:8080/api/user/addIncome/${2}`,
         incomeData
       );
       console.log("not")
@@ -68,7 +68,7 @@ const AddIncome: React.FC = () => {
             />
           </div>
           <div>
-            
+
             <label className="text-white block mb-1">Source </label>
             <input
               type="text"
@@ -83,7 +83,7 @@ const AddIncome: React.FC = () => {
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl w-full"
             disabled={loading}
           >
-            {loading ? "Submitting..." : "Submit" }
+            {loading ? "Submitting..." : "Submit"}
           </button>
         </form>
       )}
