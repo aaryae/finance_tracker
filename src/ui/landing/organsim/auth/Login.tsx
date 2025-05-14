@@ -106,8 +106,8 @@ const LoginPage = () => {
         Your browser does not support the video tag.
       </video>
 
-      <div className="text-center">
-        <h1 className="uppercase text-4xl sm:text-5xl md:text-6xl lg:text-8xl text-white font-bold mb-4 leading-tight">
+      <div className="">
+        <h1 className="uppercase text-center text-4xl sm:text-5xl md:text-6xl lg:text-8xl text-white font-bold mb-4 leading-tight">
           <span className="block text-2xl sm:text-3xl md:text-4xl">
             Welcome to
           </span>
@@ -116,7 +116,7 @@ const LoginPage = () => {
 
         {/* Login Form */}
         <div className="w-full max-w-md bg-white/10 backdrop-blur-sm rounded-lg p-6 sm:p-8 mx-auto mt-4">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-6 text-center uppercase">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-6  uppercase">
             Login
           </h2>
 
