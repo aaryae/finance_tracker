@@ -1,29 +1,23 @@
 import video from "@assets/file.mp4";
 import { Formtype } from "@type/form.type";
 import axios, { AxiosError } from "axios";
+import { Eye, EyeClosed } from "lucide-react"; // 👁️ icons
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
-// Define Yup validation schema
-// 👇 Define form type manually
-
-// 👇 Define Yup schema separately
+// Yup schema
 const registerSchema = yup.object({
   firstname: yup.string().required("First name is required"),
   lastname: yup.string().required("Last name is required"),
-  email: yup
-    .string()
-    .required("Email is required")
-    .email("Invalid email format"),
-  password: yup
-    .string()
-    .required("Password is required")
-    .min(6, "Must be at least 6 characters"),
+  email: yup.string().required("Email is required").email("Invalid email format"),
+  password: yup.string().required("Password is required").min(6, "Must be at least 6 characters"),
 });
 
 const Register = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false); // 👁️ toggle
 
   const {
     register,
@@ -33,41 +27,30 @@ const Register = () => {
     reset,
   } = useForm<Formtype>();
 
- const onSubmit: SubmitHandler<Formtype> = async (data) => {
-  try {
-    // Validate with Yup
-    await registerSchema.validate(data, { abortEarly: false });
+  const onSubmit: SubmitHandler<Formtype> = async (data) => {
+    try {
+      await registerSchema.validate(data, { abortEarly: false });
+      await axios.post("http://localhost:9090/api/user/auth/sign-up", data);
+      alert("Registration successful! Please check your Gmail and verify your account before logging in.");
+      reset();
+      navigate("/login");
+    } catch (err) {
+      if (err instanceof yup.ValidationError) {
+        err.inner.forEach((validationError) => {
+          if (validationError.path) {
+            setError(validationError.path as keyof Formtype, {
+              type: "manual",
+              message: validationError.message,
+            });
+          }
+        });
+        return;
+      }
 
-    // Make API call
-    await axios.post("http://localhost:9090/api/user/auth/sign-up", data);
-
-    // Show success message related to email verification
-    alert("Registration successful! Please check your Gmail and verify your account before logging in.");
-
-    // Reset form and navigate
-    reset();
-    navigate("/login");
-  } catch (err) {
-    if (err instanceof yup.ValidationError) {
-      err.inner.forEach((validationError) => {
-        if (validationError.path) {
-          setError(validationError.path as keyof Formtype, {
-            type: "manual",
-            message: validationError.message,
-          });
-        }
-      });
-      return;
+      const axiosError = err as AxiosError<{ message: string }>;
+      alert(axiosError.response?.data?.message || "Registration failed. Please try again.");
     }
-
-    const axiosError = err as AxiosError<{ message: string }>;
-    alert(
-      axiosError.response?.data?.message ||
-      "Registration failed. Please try again."
-    );
-  }
-};
-
+  };
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -81,7 +64,6 @@ const Register = () => {
         <source src={video} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      
 
       <h1 className="uppercase text-6xl text-white py-10 text-center">
         <span className="text-5xl">Create your</span> <br /> Finance tracker,
@@ -93,16 +75,10 @@ const Register = () => {
             Register
           </h2>
 
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col space-y-6"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-6">
             {/* First Name */}
             <div className="flex flex-col space-y-2">
-              <label
-                htmlFor="firstname"
-                className="text-white text-sm font-medium"
-              >
+              <label htmlFor="firstname" className="text-white text-sm font-medium">
                 First Name <span className="text-red-600">*</span>
               </label>
               <input
@@ -112,18 +88,13 @@ const Register = () => {
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
               />
               {errors.firstname && (
-                <p className="text-red-400 text-xs">
-                  {errors.firstname.message}
-                </p>
+                <p className="text-red-400 text-xs">{errors.firstname.message}</p>
               )}
             </div>
 
             {/* Last Name */}
             <div className="flex flex-col space-y-2">
-              <label
-                htmlFor="lastname"
-                className="text-white text-sm font-medium"
-              >
+              <label htmlFor="lastname" className="text-white text-sm font-medium">
                 Last Name <span className="text-red-600">*</span>
               </label>
               <input
@@ -133,9 +104,7 @@ const Register = () => {
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
               />
               {errors.lastname && (
-                <p className="text-red-400 text-xs">
-                  {errors.lastname.message}
-                </p>
+                <p className="text-red-400 text-xs">{errors.lastname.message}</p>
               )}
             </div>
 
@@ -155,24 +124,28 @@ const Register = () => {
               )}
             </div>
 
-            {/* Password */}
+            {/* Password with toggle */}
             <div className="flex flex-col space-y-2">
-              <label
-                htmlFor="password"
-                className="text-white text-sm font-medium"
-              >
+              <label htmlFor="password" className="text-white text-sm font-medium">
                 Password <span className="text-red-600">*</span>
               </label>
-              <input
-                {...register("password")}
-                type="password"
-                id="password"
-                className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
-              />
+              <div className="relative">
+                <input
+                  {...register("password")}
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  className="px-4 py-2 pr-10 w-full rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
+                >
+                  {showPassword ? <EyeClosed /> : <Eye />}
+                </button>
+              </div>
               {errors.password && (
-                <p className="text-red-400 text-xs">
-                  {errors.password.message}
-                </p>
+                <p className="text-red-400 text-xs">{errors.password.message}</p>
               )}
             </div>
 
