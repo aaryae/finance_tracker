@@ -87,11 +87,11 @@ const AdminDashboard = () => {
     ];
 
     return (
-        <div className="text-white p-6">
-            <h2 className="text-2xl font-bold mb-6">Admin Dashboard</h2>
+        <div className="text-white p-6 text-center w-full">
+            <h2 className="text-2xl font-bold mb-6 ">Admin Dashboard</h2>
 
             {/* Stat Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4  w-full mx-auto">
                 {stats.map((stat, index) => (
                     <div key={index} className="bg-[#262626] rounded-xl p-4 shadow-md">
                         <h3 className="text-xl font-semibold">{stat.label}</h3>
@@ -101,7 +101,7 @@ const AdminDashboard = () => {
             </div>
 
             {/* Pie Chart */}
-            <div className="bg-[#262626] rounded-xl p-6 shadow-md h-[500px]">
+            <div className="bg-transparent rounded-xl p-6 shadow-md h-[500px]">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         <Pie
