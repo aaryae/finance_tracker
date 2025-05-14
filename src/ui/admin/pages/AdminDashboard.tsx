@@ -79,9 +79,9 @@ const AdminDashboard = () => {
     ];
 
     const stats = [
-        // { label: 'Total Users', value: analytics.Total },
+        { label: 'Total Users', value: analytics.Total },
         { label: 'Active Users', value: analytics.Active },
-        { label: 'Inactive Users', value: analytics.Inactive },
+        // { label: 'Inactive Users', value: analytics.Inactive },
         { label: 'Unverified Users', value: analytics.Unverified },
         { label: 'Deleted Users', value: analytics.Delete },
     ];
