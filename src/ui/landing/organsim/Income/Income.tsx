@@ -13,12 +13,21 @@ interface IncomeEntry {
 
 const Income = () => {
   const [incomeData, setIncomeData] = useState<IncomeEntry[]>([]);
-  const userId = "2"; // You can dynamically fetch this
+  const userId = "2"; // Replace with dynamic ID if needed
 
   useEffect(() => {
     const fetchIncome = async () => {
+        const token = localStorage.getItem('accessToken');
+
       try {
-        const res = await axios.get(`http://localhost:55598/api/income/getById/${userId}`);
+        const res = await axios.get(
+          `http://localhost:8080/api/income/getById/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setIncomeData(res.data);
       } catch (err) {
         console.error("Failed to fetch income data:", err);
@@ -35,7 +44,11 @@ const Income = () => {
 
   // const handleDelete = async (id: number) => {
   //   try {
-  //     await axios.delete(`/api/user/deleteIncome/${userId}/${id}`);
+  //     await axios.delete(`http://localhost:55598/api/income/delete/${userId}/${id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
   //     setIncomeData((prev) => prev.filter((e) => e.id !== id));
   //   } catch (err) {
   //     console.error("Failed to delete:", err);
@@ -52,7 +65,7 @@ const Income = () => {
         <Example />
       </div>
       <br />
-      <IncomeTable data={incomeData}   />
+      <IncomeTable data={incomeData} />
       {/* onDelete={handleDelete} */}
       {/* onEdit={handleEdit} */}
     </div>
