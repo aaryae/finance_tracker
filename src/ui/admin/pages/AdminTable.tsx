@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 interface IUser {
@@ -56,18 +57,26 @@ const AdminTable = () => {
 
     try {
       const token = localStorage.getItem('accessToken');
-      await axios.delete(`http://localhost:9090/api/user/delete/${id}`, {
+      if (!token) throw new Error("Access token missing");
+
+      await axios.get(`http://localhost:9090/api/user/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      // Refresh the user list
-      setUsers((prev) => prev.filter((user) => user.id !== id));
-    } catch (err) {
-      console.error(err);
+      // Update user's status instead of removing from state
+      setUsers((prev) =>
+        prev.map((user) =>
+          user.id === id ? { ...user, status: 'DELETE' } : user
+        )
+      );
+    } catch (err: any) {
+      console.error("Delete Error:", err);
+      alert(err?.response?.data?.message || "Something went wrong while deleting the user.");
     }
   };
+
 
   return (
     <div className="bg-[#262626] text-white p-4 rounded-xl mx-4 md:mx-10 overflow-x-auto">
@@ -86,9 +95,9 @@ const AdminTable = () => {
               <th className="px-4 py-2">Income</th>
               <th className="px-4 py-2">Expenditure</th>
               <th className="px-4 py-2">Role</th>
+              <th className="px-4 py-2">Status</th>
               <th className="px-4 py-2">View</th>
               <th className="px-4 py-2">Delete</th>
-              <th className="px-4 py-2">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -101,6 +110,18 @@ const AdminTable = () => {
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.income || 'N/A'}</td>
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.expenses || 'N/A'}</td>
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.role}</td>
+                <td className="px-4 py-2 border-t border-[#ffffff8a]">
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-semibold ${user.status === 'ACTIVE'
+                      ? 'bg-green-600 text-white'
+                      : user.status === 'DELETE'
+                        ? 'bg-red-600 text-white'
+                        : 'bg-gray-500 text-white'
+                      }`}
+                  >
+                    {user.status}
+                  </span>
+                </td>
                 <td
                   className="px-4 py-2 border-t border-[#ffffff8a] cursor-pointer text-blue-400 hover:underline"
                   onClick={() => handleView(user.id)}
@@ -109,11 +130,10 @@ const AdminTable = () => {
                 </td>
                 <td
                   className="px-4 py-2 border-t border-[#ffffff8a] cursor-pointer text-red-400 hover:underline"
-                  onClick={() => handleDelete(user.id)}
+
                 >
-                  Delete
+                  <Trash2 onClick={() => handleDelete(user.id)} />
                 </td>
-                <td className="px-4 py-2 border-t border-[#ffffff8a]">{user.status}</td>
               </tr>
             ))}
           </tbody>
@@ -130,17 +150,42 @@ const AdminTable = () => {
             >
               ✕
             </button>
-            <h3 className="text-lg font-bold mb-4">User Details</h3>
-            <p><strong>First Name:</strong> {selectedUser.firstname}</p>
-            <p><strong>Last Name:</strong> {selectedUser.lastname}</p>
-            <p><strong>Email:</strong> {selectedUser.email}</p>
-            <p><strong>Role:</strong> {selectedUser.role}</p>
-            <p><strong>Status:</strong> {selectedUser.status}</p>
-            <p><strong>Income:</strong> {selectedUser.income}</p>
-            <p><strong>Expenses:</strong> {selectedUser.expenses}</p>
+            <h3 className="text-2xl font-bold mb-6 text-center border-b border-gray-700 pb-2">
+              User Details
+            </h3>
+            <div className="grid grid-cols-2 gap-y-4 gap-x-4 text-sm">
+              <p className="text-gray-400">First Name:</p>
+              <p>{selectedUser.firstname}</p>
+              <p className="text-gray-400">Last Name:</p>
+              <p>{selectedUser.lastname}</p>
+              <p className="text-gray-400">Email:</p>
+              <p>{selectedUser.email}</p>
+              <p className="text-gray-400">Role:</p>
+              <p>
+                <span className="px-2 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white">
+                  {selectedUser.role}
+                </span>
+              </p>
+              <p className="text-gray-400">Status:</p>
+              <p>
+                <span className={`px-2 py-1 rounded-full text-xs font-semibold ${selectedUser.status === 'ACTIVE'
+                  ? 'bg-green-600 text-white'
+                  : selectedUser.status === 'DELETE'
+                    ? 'bg-red-600 text-white'
+                    : 'bg-gray-600 text-white'
+                  }`}>
+                  {selectedUser.status}
+                </span>
+              </p>
+              <p className="text-gray-400">Income:</p>
+              <p>{selectedUser.income}</p>
+              <p className="text-gray-400">Expenses:</p>
+              <p>{selectedUser.expenses}</p>
+            </div>
           </div>
         </div>
       )}
+
     </div>
   );
 };
