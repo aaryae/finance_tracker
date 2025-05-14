@@ -21,7 +21,7 @@ const DashboardStats: React.FC<Props> = ({ income, expense, profit, selected, on
       icon: <ShoppingBag size={20} color="black" />,
     },
     {
-      label: "Profit",
+      label: "Remaining Balance",
       value: `$${profit.toLocaleString()}`,
       icon: <Eye size={20} color="black" />,
     },
