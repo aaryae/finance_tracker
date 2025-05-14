@@ -93,7 +93,7 @@ const AdminDashboard = () => {
             {/* Stat Cards */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
                 {stats.map((stat, index) => (
-                    <div key={index} className="bg-[#1f2937] rounded-xl p-4 shadow-md">
+                    <div key={index} className="bg-[#262626] rounded-xl p-4 shadow-md">
                         <h3 className="text-xl font-semibold">{stat.label}</h3>
                         <p className="text-2xl font-bold text-blue-400">{stat.value}</p>
                     </div>
@@ -101,7 +101,7 @@ const AdminDashboard = () => {
             </div>
 
             {/* Pie Chart */}
-            <div className="bg-[#1f2937] rounded-xl p-6 shadow-md h-[400px]">
+            <div className="bg-[#262626] rounded-xl p-6 shadow-md h-[500px]">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         <Pie
@@ -110,8 +110,8 @@ const AdminDashboard = () => {
                             data={pieData}
                             cx="50%"
                             cy="50%"
-                            innerRadius={80}
-                            outerRadius={110}
+                            innerRadius={100}
+                            outerRadius={150}
                             fill="#8884d8"
                             dataKey="value"
                             onMouseEnter={(_, index) => setActiveIndex(index)}
