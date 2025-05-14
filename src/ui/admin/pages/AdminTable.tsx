@@ -81,8 +81,8 @@ const AdminTable = () => {
 
   return (
     <div className="bg-[#262626] text-white p-4 rounded-xl mx-4 md:mx-10 overflow-x-auto">
-      <h2 className="text-xl font-semibold mb-4 text-center md:text-left">
-        Recent Transactions
+      <h2 className=" flex justify-center text-2xl font-semibold mb-4 text-center md:text-left">
+        Admin Table
       </h2>
 
       <div className="overflow-x-auto w-full">
