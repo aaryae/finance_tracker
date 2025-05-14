@@ -1,17 +1,51 @@
 import React, { useState } from "react";
+import axios from "axios";
 
-const AddExpense= () => {
+const AddExpense: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [amount, setAmount] = useState("");
-  const [source, setSource] = useState("");
+  const [remark, setRemark] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("Expense added:", { amount, source });
-    // Reset
-    setAmount("");
-    setSource("");
-    setShowForm(false);
+
+    const receiverId = localStorage.getItem("userId");
+    const token = localStorage.getItem("accessToken");
+
+    if (!receiverId || !token) {
+      setMessage("Missing token or receiver ID.");
+      return;
+    }
+
+    const expenseData = {
+      amount: parseFloat(amount),
+      remark: remark.trim(),
+    };
+
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        `http://localhost:8080/api/user/addExpenses/${receiverId}`,
+        expenseData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Expense added:", res.data);
+      setMessage("Expense added successfully!");
+      setAmount("");
+      setRemark("");
+      setShowForm(false);
+    } catch (err) {
+      console.error("Error adding expense:", err);
+      setMessage("Failed to add expense.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -28,12 +62,12 @@ const AddExpense= () => {
 
       {showForm && (
         <form onSubmit={handleSubmit} className="mt-4 space-y-3">
-               <div>
-            <label className="text-white block mb-1">Source</label>
+          <div>
+            <label className="text-white block mb-1">Remark</label>
             <input
               type="text"
-              value={source}
-              onChange={(e) => setSource(e.target.value)}
+              value={remark}
+              onChange={(e) => setRemark(e.target.value)}
               className="w-full px-3 py-2 rounded bg-[#2e2e2e] text-white border border-gray-600 focus:outline-none"
               required
             />
@@ -43,19 +77,23 @@ const AddExpense= () => {
             <input
               type="number"
               value={amount}
-              onChange={(event) => setAmount(event.target.value)}
+              onChange={(e) => setAmount(e.target.value)}
               className="w-full px-3 py-2 rounded bg-[#2e2e2e] text-white border border-gray-600 focus:outline-none"
               required
             />
           </div>
-       
           <button
             type="submit"
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl w-full"
+            disabled={loading}
           >
-            Submit
+            {loading ? "Submitting..." : "Submit"}
           </button>
         </form>
+      )}
+
+      {message && (
+        <p className="text-sm text-center mt-3 text-white">{message}</p>
       )}
     </div>
   );
