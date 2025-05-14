@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AddIncome from "./AddIncome";
-import Example from "./Example";
+import Example from "./IncomeGraph";
 import IncomeTable from "./IncomeTable";
 import { IncomeEntry } from "@type/income.type";
 
@@ -10,7 +10,7 @@ const Income = () => {
   const [editing, setEditing] = useState<IncomeEntry | null>(null);
   const [editRemark, setEditRemark] = useState("");
   const [editAmount, setEditAmount] = useState("");
-  const userId = "2";
+  const userId = "2"; // Replace with dynamic user if needed
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const Income = () => {
 
     try {
       await axios.post(
-        `http://localhost:8080/api/user/updateIncome/${userId}/${editing.id}`,
+        `http://localhost:8080/api/income/update/${editing.id}`, 
         {
           remark: editRemark,
           amount: parseFloat(editAmount),
@@ -56,6 +56,7 @@ const Income = () => {
         }
       );
 
+      // Update UI state
       setIncomeData((prev) =>
         prev.map((e) =>
           e.id === editing.id
@@ -92,14 +93,18 @@ const Income = () => {
         <h1 className="my-2 text-3xl py-4 tracking-wide uppercase text-white text-center">
           Chart showing Income
         </h1>
-        <Example />
+<Example data={incomeData} />
       </div>
       <br />
-      <IncomeTable data={incomeData} onDelete={handleDelete} onEdit={handleEdit} />
+      <IncomeTable
+        data={incomeData}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+      />
 
       {/* Edit Modal */}
       {editing && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-black bg-opacity-60 z-50">
+        <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-[#000000a2] bg-opacity-60 z-50">
           <div className="bg-[#1e1e1e] p-6 rounded-xl shadow-xl w-96 text-white">
             <h2 className="text-xl font-semibold mb-4">Edit Income</h2>
             <label className="block mb-2">Remark</label>
