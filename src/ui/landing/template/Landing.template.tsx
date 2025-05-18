@@ -16,6 +16,7 @@ const LandingTemplate = () => {
         <Outlet />
       </div>
       <Footer />
+      
     </div>
   );
 };
