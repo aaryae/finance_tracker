@@ -1,16 +1,16 @@
+import { IncomeEntry } from "@type/income.type";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AddIncome from "./AddIncome";
 import Example from "./IncomeGraph";
 import IncomeTable from "./IncomeTable";
-import { IncomeEntry } from "@type/income.type";
 
 const Income = () => {
   const [incomeData, setIncomeData] = useState<IncomeEntry[]>([]);
   const [editing, setEditing] = useState<IncomeEntry | null>(null);
   const [editSource, setEditSource] = useState(""); // ✅ renamed for consistency
   const [editAmount, setEditAmount] = useState("");
-  const userId = localStorage.getItem("userId")
+  const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const Income = () => {
   };
 
   return (
-    <div className="container mx-auto max-w-5xl">
+    <div className="container mx-auto max-w-5xl px-5">
       <AddIncome />
       <div className="bg-[#262626] px-10 py-4 rounded-3xl">
         <h1 className="my-2 text-3xl py-4 tracking-wide uppercase text-white text-center">

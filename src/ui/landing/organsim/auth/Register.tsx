@@ -11,8 +11,14 @@ import * as yup from "yup";
 const registerSchema = yup.object({
   firstname: yup.string().required("First name is required"),
   lastname: yup.string().required("Last name is required"),
-  email: yup.string().required("Email is required").email("Invalid email format"),
-  password: yup.string().required("Password is required").min(6, "Must be at least 6 characters"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email format"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(6, "Must be at least 6 characters"),
 });
 
 const Register = () => {
@@ -31,7 +37,9 @@ const Register = () => {
     try {
       await registerSchema.validate(data, { abortEarly: false });
       await axios.post("http://localhost:9090/api/user/auth/sign-up", data);
-      alert("Registration successful! Please check your Gmail and verify your account before logging in.");
+      alert(
+        "Registration successful! Please check your Gmail and verify your account before logging in."
+      );
       reset();
       navigate("/login");
     } catch (err) {
@@ -48,12 +56,15 @@ const Register = () => {
       }
 
       const axiosError = err as AxiosError<{ message: string }>;
-      alert(axiosError.response?.data?.message || "Registration failed. Please try again.");
+      alert(
+        axiosError.response?.data?.message ||
+          "Registration failed. Please try again."
+      );
     }
   };
 
   return (
-    <div className="relative w-full h-fit ">
+    <div className="relative w-full h-screen">
       <video
         autoPlay
         loop
@@ -75,10 +86,16 @@ const Register = () => {
             Register
           </h2>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col space-y-6"
+          >
             {/* First Name */}
             <div className="flex flex-col space-y-2">
-              <label htmlFor="firstname" className="text-white text-sm font-medium">
+              <label
+                htmlFor="firstname"
+                className="text-white text-sm font-medium"
+              >
                 First Name <span className="text-red-600">*</span>
               </label>
               <input
@@ -88,13 +105,18 @@ const Register = () => {
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
               />
               {errors.firstname && (
-                <p className="text-red-400 text-xs">{errors.firstname.message}</p>
+                <p className="text-red-400 text-xs">
+                  {errors.firstname.message}
+                </p>
               )}
             </div>
 
             {/* Last Name */}
             <div className="flex flex-col space-y-2">
-              <label htmlFor="lastname" className="text-white text-sm font-medium">
+              <label
+                htmlFor="lastname"
+                className="text-white text-sm font-medium"
+              >
                 Last Name <span className="text-red-600">*</span>
               </label>
               <input
@@ -104,7 +126,9 @@ const Register = () => {
                 className="px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white/80"
               />
               {errors.lastname && (
-                <p className="text-red-400 text-xs">{errors.lastname.message}</p>
+                <p className="text-red-400 text-xs">
+                  {errors.lastname.message}
+                </p>
               )}
             </div>
 
@@ -126,7 +150,10 @@ const Register = () => {
 
             {/* Password with toggle */}
             <div className="flex flex-col space-y-2">
-              <label htmlFor="password" className="text-white text-sm font-medium">
+              <label
+                htmlFor="password"
+                className="text-white text-sm font-medium"
+              >
                 Password <span className="text-red-600">*</span>
               </label>
               <div className="relative">
@@ -145,7 +172,9 @@ const Register = () => {
                 </button>
               </div>
               {errors.password && (
-                <p className="text-red-400 text-xs">{errors.password.message}</p>
+                <p className="text-red-400 text-xs">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 

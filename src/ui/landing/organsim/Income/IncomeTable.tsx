@@ -7,17 +7,15 @@ interface IncomeTableProps {
   onDelete?: (id: number) => void;
 }
 
-const IncomeTable: React.FC<IncomeTableProps> = ({ data, onEdit, onDelete }) => {
-
+const IncomeTable: React.FC<IncomeTableProps> = ({
+  data,
+  onEdit,
+  onDelete,
+}) => {
   return (
-    
     <div className="bg-[#262626] text-white p-4 rounded-xl w-full overflow-x-auto">
-
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-4">
-        <h2 className="text-xl font-semibold">Recent Transactions</h2>
-        <a className="underline text-sm text-blue-400 hover:text-blue-300" href="#">
-          More
-        </a>
+        <h2 className="text-xl font-semibold">Income Table</h2>
       </div>
       <table className="w-full min-w-[500px] text-left border-separate border-spacing-y-2">
         <thead>
@@ -30,10 +28,16 @@ const IncomeTable: React.FC<IncomeTableProps> = ({ data, onEdit, onDelete }) => 
         </thead>
         <tbody>
           {data.map((entry, index) => (
-            
-            <tr key={entry.id} className="hover:bg-[#333] transition duration-200 rounded-lg">
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{index + 1}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{entry.remark}</td>
+            <tr
+              key={entry.id}
+              className="hover:bg-[#333] transition duration-200 rounded-lg"
+            >
+              <td className="px-4 py-2 border-t border-[#ffffff8a]">
+                {index + 1}
+              </td>
+              <td className="px-4 py-2 border-t border-[#ffffff8a]">
+                {entry.remark}
+              </td>
               <td className="px-4 py-2 border-t border-[#ffffff8a]">
                 ${entry.amount.toLocaleString()}
               </td>

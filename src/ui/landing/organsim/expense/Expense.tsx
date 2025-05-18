@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import AddExpense from "./AddExpense";
 import ExpenseGraph from "./ExpenseGraph"; // ✅ updated import
 import ExpenseTable from "./ExpenseTable";
-import AddExpense from "./AddExpense";
 
 interface ExpenseEntry {
   id: number;
@@ -54,7 +54,7 @@ const Expense = () => {
   };
 
   return (
-    <div className="container mx-auto max-w-5xl">
+    <div className="container mx-auto max-w-5xl px-4">
       <AddExpense />
       <div className="bg-[#262626] px-10 py-4 rounded-3xl">
         <h1 className="my-2 text-3xl py-4 tracking-wide uppercase text-white text-center">

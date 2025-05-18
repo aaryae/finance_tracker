@@ -2,7 +2,6 @@ import AdminRoute from "@ui/admin/AdminRoute"; // ✅ Make sure it's imported
 import AdminDashboard from "@ui/admin/pages/AdminDashboard";
 import AdminTable from "@ui/admin/pages/AdminTable";
 import AdminTemplate from "@ui/admin/template/AdminTemplate";
-import ProtectedRoute from "@ui/common/ProtectedRoute";
 import ForgotPassword from "@ui/landing/organsim/auth/ForgotPassword";
 import Login from "@ui/landing/organsim/auth/Login";
 import Register from "@ui/landing/organsim/auth/Register";
@@ -14,7 +13,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
-    element: <ProtectedRoute />,
+    // element: <ProtectedRoute />,
     children: [
       {
         path: "/",
@@ -45,8 +44,7 @@ const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
 ]);
 function App() {
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} />;
 }
 
-
-export default App
+export default App;

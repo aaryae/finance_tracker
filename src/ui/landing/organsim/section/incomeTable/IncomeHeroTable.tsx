@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 // src/components/IncomeTable.tsx
 interface IncomeMiniEntry {
   remark: string;
@@ -13,7 +15,9 @@ const IncomeHeroTable: React.FC<IncomeTableProps> = ({ data }) => {
     <div className="bg-[#262626] text-white p-4 rounded-xl w-full max-w-4xl">
       <div className="flex w-full justify-between">
         <h2 className="text-xl font-semibold mb-4">Income Table</h2>
-        <a className="underline" href="#">more</a>
+        <Link className="underline" to="/income">
+          more
+        </Link>
       </div>
       <table className="w-full text-left border-separate border-spacing-y-2">
         <thead>
@@ -25,10 +29,19 @@ const IncomeHeroTable: React.FC<IncomeTableProps> = ({ data }) => {
         </thead>
         <tbody>
           {data.map((entry, index) => (
-            <tr key={index} className="hover:bg-[#333] transition duration-200 rounded-lg">
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{index + 1}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">{entry.remark}</td>
-              <td className="px-4 py-2 border-t border-[#ffffff8a]">${entry.amount.toFixed(2)}</td>
+            <tr
+              key={index}
+              className="hover:bg-[#333] transition duration-200 rounded-lg"
+            >
+              <td className="px-4 py-2 border-t border-[#ffffff8a]">
+                {index + 1}
+              </td>
+              <td className="px-4 py-2 border-t border-[#ffffff8a]">
+                {entry.remark}
+              </td>
+              <td className="px-4 py-2 border-t border-[#ffffff8a]">
+                ${entry.amount.toFixed(2)}
+              </td>
             </tr>
           ))}
         </tbody>

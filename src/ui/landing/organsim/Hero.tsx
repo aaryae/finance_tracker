@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import ExpenseTable from "./section/expenseTable/ExpenseHeroTable";
 import AnalyticsHighExpense from "./section/heroAnalytics/AnalyticsHighExpense";
 import AnalyticsLineChart from "./section/heroAnalytics/AnalyticsLineChart";
 import ProfitCard from "./section/heroAnalytics/ProfitCard";
 import IncomeTable from "./section/incomeTable/IncomeHeroTable";
-import ExpenseTable from "./section/expenseTable/ExpenseHeroTable";
 
 interface IncomeEntry {
   id: number;
@@ -24,8 +24,8 @@ const Hero = () => {
   const [incomeData, setIncomeData] = useState<IncomeEntry[]>([]);
   const [expenseData, setExpenseData] = useState<ExpenseEntry[]>([]);
 
-  const userId = "2";
-  const receiverId = "2"; // if same as userId
+  const userId = localStorage.getItem("userId");
+  // const receiverId = "2"; // if same as userId
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const Hero = () => {
     const fetchExpenses = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/expenses/getAllExpenses/${receiverId}`,
+          `http://localhost:8080/api/expenses/getAllExpenses/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -63,15 +63,15 @@ const Hero = () => {
 
     fetchIncome();
     fetchExpenses();
-  }, [userId, receiverId, token]);
+  }, [userId, token]);
 
   const firstThreeIncome = incomeData.slice(0, 3);
   const firstThreeExpenses = expenseData.slice(0, 3);
 
   return (
     <div className="container mx-auto">
-      <div className="flex  gap-1 justify-center">
-        <div className="flex flex-col gap-3 w-fit justify-center items-center mx-6">
+      <div className="flex flex-wrap gap-1 justify-center">
+        <div className="flex flex-col gap-3 w-fit justify-center items-center mx-6 px-2">
           <AnalyticsLineChart />
           <div className="flex flex-wrap gap-3 md:mx-4 mx-3 justify-center w-full items-center">
             <IncomeTable data={firstThreeIncome} />
@@ -80,7 +80,7 @@ const Hero = () => {
         </div>
         <div className="w-full lg:w-1/4 flex flex-col justify-center gap-4 bg-[#262626] rounded-3xl max-h-fit sticky top-12 my-3 mx-7">
           <ProfitCard />
-<AnalyticsHighExpense data={expenseData} />
+          <AnalyticsHighExpense data={expenseData} />
         </div>
       </div>
     </div>
