@@ -1,32 +1,31 @@
 import { DollarSign, Eye, ShoppingBag } from "lucide-react";
-import { useState } from "react";
 
-const stats = [
-  {
-    label: "Total profit",
-    value: "$82,373.21",
-    change: "+3.4%",
-    changeType: "increase",
-    icon: <DollarSign size={20} color="black" />,
-  },
-  {
-    label: "Total order",
-    value: "7,234",
-    change: "-2.8%",
-    changeType: "decrease",
-    icon: <ShoppingBag size={20} color="black" />,
-  },
-  {
-    label: "Impression",
-    value: "3.1M",
-    change: "+4.6%",
-    changeType: "increase",
-    icon: <Eye size={20} color="black" />,
-  },
-];
+interface Props {
+  income: number;
+  expense: number;
+  profit: number;
+  selected: string;
+  onSelect: (type: string) => void;
+}
 
-const DashboardStats = () => {
-  const [selected, setSelected] = useState("Total profit");
+const DashboardStats: React.FC<Props> = ({ income, expense, profit, selected, onSelect }) => {
+  const stats = [
+    {
+      label: "Total Income",
+      value: `$${income.toLocaleString()}`,
+      icon: <DollarSign size={20} color="black" />,
+    },
+    {
+      label: "Total Expenses",
+      value: `$${expense.toLocaleString()}`,
+      icon: <ShoppingBag size={20} color="black" />,
+    },
+    {
+      label: "Remaining Balance",
+      value: `$${profit.toLocaleString()}`,
+      icon: <Eye size={20} color="black" />,
+    },
+  ];
 
   return (
     <div className="flex flex-wrap gap-4 w-full bg-[#404040] p-4 rounded-xl">
@@ -35,25 +34,14 @@ const DashboardStats = () => {
         return (
           <div
             key={stat.label}
-            onClick={() => setSelected(stat.label)}
+            onClick={() => onSelect(stat.label)}
             className={`flex flex-1 cursor-pointer items-center justify-between p-4 rounded-xl transition-all duration-300 ${
-              isSelected
-                ? "bg-[#171717] text-white"
-                : "bg-[#404040] text-gray-300"
+              isSelected ? "bg-[#171717] text-white" : "bg-[#404040] text-gray-300"
             }`}
           >
             <div>
-              <p className="text-sm  py-1 font-medium">{stat.label}</p>
+              <p className="text-sm py-1 font-medium">{stat.label}</p>
               <p className="text-2xl py-1 font-bold">{stat.value}</p>
-              <p
-                className={`text-sm ${
-                  stat.changeType === "increase"
-                    ? "text-green-500"
-                    : "text-red-500"
-                }`}
-              >
-                {stat.change} from last month
-              </p>
             </div>
             <div className="p-2 rounded-full bg-opacity-30 bg-white">
               {stat.icon}

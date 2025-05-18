@@ -7,7 +7,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
-// Yup schema
 const loginSchema = yup.object({
   email: yup
     .string()
@@ -18,7 +17,7 @@ const loginSchema = yup.object({
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false); // 👁️ Toggle state
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -27,7 +26,6 @@ const LoginPage = () => {
     formState: { errors, isSubmitting },
   } = useForm<Formtype>();
 
-  // Function to refresh access token
   const refreshAccessToken = async () => {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
@@ -51,7 +49,6 @@ const LoginPage = () => {
     }
   };
 
-  // Refresh token every 50 minutes
   useEffect(() => {
     const interval = setInterval(() => {
       refreshAccessToken();
@@ -68,18 +65,13 @@ const LoginPage = () => {
         data
       );
 
-      const userId = res.data?.userId;
-      const refreshToken = res.data?.refreshToken;
-      const accessToken = res.data?.token;
-      const role = res.data?.role;
+      const { userId, refreshToken, token: accessToken, role } = res.data;
 
       localStorage.setItem("userId", userId);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("role", role)
+      localStorage.setItem("role", role);
 
-
-      // alert("Login successful!");
       navigate(role === "ADMIN" ? "/admin" : "/", { replace: true });
     } catch (err) {
       if (err instanceof yup.ValidationError) {
@@ -101,27 +93,30 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full min-h-screen flex items-center justify-center px-4">
       {/* Background Video */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute top-[50%] left-[50%] w-full object-cover -translate-x-1/2 -translate-y-1/2 z-[-1] opacity-60"
+        className="absolute top-0 left-0 w-full h-full object-cover z-[-1] opacity-60"
       >
         <source src={video} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
-      <h1 className="uppercase text-8xl text-white py-10 text-center">
-        <span className="text-5xl">Welcome to</span> <br /> Finance tracker,
-      </h1>
+      <div className="">
+        <h1 className="uppercase text-center text-4xl sm:text-5xl md:text-6xl lg:text-8xl text-white font-bold mb-4 leading-tight">
+          <span className="block text-2xl sm:text-3xl md:text-4xl">
+            Welcome to
+          </span>
+          Finance Tracker
+        </h1>
 
-      {/* Login Form */}
-      <div className="relative z-10 flex flex-col items-center mt-12">
-        <div className="w-full max-w-md mx-4">
-          <h2 className="uppercase text-4xl font-semibold text-white mb-6 text-center">
+        {/* Login Form */}
+        <div className="w-full max-w-md bg-white/10 backdrop-blur-sm rounded-lg p-6 sm:p-8 mx-auto mt-4">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-6  uppercase">
             Login
           </h2>
 
@@ -133,7 +128,7 @@ const LoginPage = () => {
             <div className="flex flex-col space-y-2">
               <label
                 htmlFor="email"
-                className="text-white font-medium text-sm tracking-wide"
+                className="text-white font-medium text-sm"
               >
                 Email Address <span className="text-red-700">*</span>
               </label>
@@ -149,11 +144,11 @@ const LoginPage = () => {
               )}
             </div>
 
-            {/* Password with eye toggle */}
+            {/* Password */}
             <div className="flex flex-col space-y-2">
               <label
                 htmlFor="password"
-                className="text-white font-medium text-sm tracking-wide"
+                className="text-white font-medium text-sm"
               >
                 Password <span className="text-red-700">*</span>
               </label>
@@ -168,7 +163,7 @@ const LoginPage = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-sm focus:outline-none"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white"
                 >
                   {showPassword ? <EyeClosed /> : <Eye />}
                 </button>
@@ -181,10 +176,10 @@ const LoginPage = () => {
             </div>
 
             {/* Forgot Password */}
-            <div className="flex -mt-2">
+            <div className="text-right -mt-2">
               <Link
                 to="/forgot-password"
-                className="text-white text-xs underline hover:text-gray-300 transition"
+                className="text-white text-xs underline hover:text-gray-300"
               >
                 Forgot Password?
               </Link>
@@ -192,7 +187,7 @@ const LoginPage = () => {
 
             <button
               type="submit"
-              className="bg-white text-black font-semibold py-2 rounded-lg hover:bg-gray-200 transition-all duration-300"
+              className="bg-white text-black font-semibold py-2 rounded-lg hover:bg-gray-200 transition duration-300"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Signing In..." : "Sign In"}
@@ -200,8 +195,8 @@ const LoginPage = () => {
           </form>
 
           <p className="text-sm text-white mt-4 text-center">
-            Don't have an account?{" "}
-            <Link to="/register" className="underline cursor-pointer">
+            Don&apos;t have an account?{" "}
+            <Link to="/register" className="underline hover:text-gray-300">
               Sign up
             </Link>
           </p>

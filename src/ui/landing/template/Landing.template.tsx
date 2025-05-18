@@ -10,9 +10,8 @@ const LandingTemplate = () => {
     <div className="flex flex-col h-screen">
       <Navbar navstate={navstate} setNavstate={setNavstate} />
       <div
-        className={`pt-24 transition-all duration-300 ease-in-out ${
-          navstate ? " md:pl-80" : "md:pl-20"
-        }`}
+        className={`px-4 pt-24 transition-all duration-300 ease-in-out ${navstate ? " md:pl-80" : "md:pl-20"
+          }`}
       >
         <Outlet />
       </div>
