@@ -25,7 +25,7 @@ const Hero = () => {
   const [expenseData, setExpenseData] = useState<ExpenseEntry[]>([]);
 
   const userId = localStorage.getItem("userId");
-  // const receiverId = "2"; // if same as userId
+  
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {

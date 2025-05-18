@@ -1,11 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const AddIncome: React.FC = () => {
+interface AddIncomeProps {
+  onIncomeAdded: () => void;
+}
+
+const AddIncome = ({ onIncomeAdded }:AddIncomeProps) => {
   const [showForm, setShowForm] = useState(false);
   const [amount, setAmount] = useState("");
   const [source, setSource] = useState("");
-  const [remark, setRemark] = useState(""); // ✅ added state
+  const [remark, setRemark] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -21,7 +25,7 @@ const AddIncome: React.FC = () => {
     const incomeData = {
       amount: parseFloat(amount),
       source: source.trim(),
-      remark: remark.trim(), // ✅ included remark
+      remark: remark.trim(),
     };
 
     try {
@@ -42,8 +46,10 @@ const AddIncome: React.FC = () => {
       setMessage("Income added successfully!");
       setAmount("");
       setSource("");
-      setRemark(""); // ✅ reset remark
+      setRemark("");
       setShowForm(false);
+
+      onIncomeAdded(); // ✅ Notify parent to refresh data
     } catch (error: any) {
       console.error(error);
       setMessage("Failed to add income. Please try again.");
@@ -77,19 +83,10 @@ const AddIncome: React.FC = () => {
             />
           </div>
 
-          {/* <div>
-            <label className="text-white block mb-1">Source</label>
-            <input
-              type="text"
-              value={source}
-              onChange={(e) => setSource(e.target.value)}
-              className="w-full px-3 py-2 rounded bg-[#2e2e2e] text-white border border-gray-600 focus:outline-none"
-              required
-            />
-          </div> */}
+        
 
           <div>
-            <label className="text-white block mb-1">Source</label>
+            <label className="text-white block mb-1">Remark</label>
             <input
               type="text"
               value={remark}

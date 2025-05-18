@@ -7,11 +7,11 @@ interface IncomeTableProps {
   onDelete?: (id: number) => void;
 }
 
-const IncomeTable: React.FC<IncomeTableProps> = ({
+const IncomeTable = ({
   data,
   onEdit,
   onDelete,
-}) => {
+}:IncomeTableProps) => {
   return (
     <div className="bg-[#262626] text-white p-4 rounded-xl w-full overflow-x-auto">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-4">
@@ -43,10 +43,10 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
               </td>
               <td className="px-4 py-2 border-t border-[#ffffff8a]">
                 <div className="flex space-x-4">
-                  <FaEdit
+                  {/* <FaEdit
                     onClick={() => onEdit?.(entry)}
                     className="text-blue-500 hover:text-blue-400 cursor-pointer"
-                  />
+                  /> */}
                   <FaTrash
                     onClick={() => onDelete?.(entry.id)}
                     className="text-red-500 hover:text-red-400 cursor-pointer"

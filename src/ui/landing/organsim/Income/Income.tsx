@@ -8,34 +8,34 @@ import IncomeTable from "./IncomeTable";
 const Income = () => {
   const [incomeData, setIncomeData] = useState<IncomeEntry[]>([]);
   const [editing, setEditing] = useState<IncomeEntry | null>(null);
-  const [editSource, setEditSource] = useState(""); // ✅ renamed for consistency
+  const [editSource, setEditSource] = useState("");
   const [editAmount, setEditAmount] = useState("");
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("accessToken");
 
-  useEffect(() => {
-    const fetchIncome = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8080/api/income/getAllIncome/${userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setIncomeData(res.data);
-      } catch (err) {
-        console.error("Failed to fetch income data:", err);
-      }
-    };
+  const fetchIncome = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8080/api/income/getAllIncome/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setIncomeData(res.data);
+    } catch (err) {
+      console.error("Failed to fetch income data:", err);
+    }
+  };
 
+  useEffect(() => {
     fetchIncome();
   }, [userId, token]);
 
   const handleEdit = (entry: IncomeEntry) => {
     setEditing(entry);
-    setEditSource(entry.remark); // ✅ Set the current remark (source)
+    setEditSource(entry.remark);
     setEditAmount(entry.amount.toString());
   };
 
@@ -46,7 +46,7 @@ const Income = () => {
       await axios.post(
         `http://localhost:8080/api/income/update/${editing.id}`,
         {
-          source: editSource, // ✅ match backend naming
+          source: editSource,
           amount: parseFloat(editAmount),
         },
         {
@@ -56,13 +56,7 @@ const Income = () => {
         }
       );
 
-      setIncomeData((prev) =>
-        prev.map((e) =>
-          e.id === editing.id
-            ? { ...e, remark: editSource, amount: parseFloat(editAmount) }
-            : e
-        )
-      );
+      fetchIncome(); // ✅ Refetch after update
 
       setEditing(null);
       setEditSource("");
@@ -79,7 +73,7 @@ const Income = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setIncomeData((prev) => prev.filter((e) => e.id !== id));
+      fetchIncome(); // ✅ Refetch after delete
     } catch (err) {
       console.error("Failed to delete:", err);
     }
@@ -87,7 +81,7 @@ const Income = () => {
 
   return (
     <div className="container mx-auto max-w-5xl px-5">
-      <AddIncome />
+      <AddIncome onIncomeAdded={fetchIncome} />
       <div className="bg-[#262626] px-10 py-4 rounded-3xl">
         <h1 className="my-2 text-3xl py-4 tracking-wide uppercase text-white text-center">
           Chart showing Income
@@ -101,7 +95,6 @@ const Income = () => {
         onEdit={handleEdit}
       />
 
-      {/* Edit Modal */}
       {editing && (
         <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-[#000000a2] bg-opacity-60 z-50">
           <div className="bg-[#1e1e1e] p-6 rounded-xl shadow-xl w-96 text-white">

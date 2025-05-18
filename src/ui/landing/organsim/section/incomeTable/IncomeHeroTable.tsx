@@ -43,7 +43,7 @@ const IncomeHeroTable: React.FC<IncomeTableProps> = ({ data }) => {
                 ${entry.amount.toFixed(2)}
               </td>
             </tr>
-          ))}
+          ))}i
         </tbody>
       </table>
     </div>

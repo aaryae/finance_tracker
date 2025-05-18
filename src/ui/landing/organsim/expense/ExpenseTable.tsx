@@ -47,10 +47,10 @@ const ExpenseTable = ({ data, onEdit, onDelete }: ExpenseTableProps) => {
                 </td>
                 <td className="px-4 py-2 border-t border-[#ffffff8a]">
                   <div className="flex space-x-4">
-                    <FaEdit
+                    {/* <FaEdit
                       onClick={() => onEdit?.(entry)}
                       className="text-blue-500 hover:text-blue-400 cursor-pointer"
-                    />
+                    /> */}
                     <FaTrash
                       onClick={() => onDelete?.(entry.id)}
                       className="text-red-500 hover:text-red-400 cursor-pointer"

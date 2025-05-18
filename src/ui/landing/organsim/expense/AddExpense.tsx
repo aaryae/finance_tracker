@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const AddExpense: React.FC = () => {
+interface AddExpenseProps {
+  onExpenseAdded: () => void;
+}
+
+const AddExpense = ({ onExpenseAdded }:AddExpenseProps) => {
   const [showForm, setShowForm] = useState(false);
   const [amount, setAmount] = useState("");
   const [remark, setRemark] = useState("");
@@ -40,6 +44,8 @@ const AddExpense: React.FC = () => {
       setAmount("");
       setRemark("");
       setShowForm(false);
+
+      onExpenseAdded(); // ✅ Refresh parent table
     } catch (err) {
       console.error("Error adding expense:", err);
       setMessage("Failed to add expense.");

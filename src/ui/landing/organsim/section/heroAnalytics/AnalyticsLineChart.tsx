@@ -21,7 +21,7 @@ const AnalyticsLineChart = () => {
   const [selectedType, setSelectedType] = useState("Total Income");
 
   const token = localStorage.getItem("accessToken");
-  const userId = "2";
+  const userId =localStorage.getItem("userId")
 
   useEffect(() => {
     const fetchData = async () => {
