@@ -5,13 +5,14 @@ const AddIncome: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [amount, setAmount] = useState("");
   const [source, setSource] = useState("");
+  const [remark, setRemark] = useState(""); // ✅ added state
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const userId = localStorage.getItem("userId"); // Must be already stored in localStorage
-    console.log("this is userid", userId);
+    const userId = localStorage.getItem("userId");
+
     if (!userId) {
       setMessage("User ID not found.");
       return;
@@ -20,26 +21,28 @@ const AddIncome: React.FC = () => {
     const incomeData = {
       amount: parseFloat(amount),
       source: source.trim(),
-
+      remark: remark.trim(), // ✅ included remark
     };
 
     try {
       setLoading(true);
-      const token = localStorage.getItem('accessToken');
+      const token = localStorage.getItem("accessToken");
 
       const res = await axios.post(
-        `http://localhost:9090/api/user/addIncome/${2}`,
+        `http://localhost:9090/api/user/addIncome/${userId}`,
         incomeData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-          }
-        },
+          },
+        }
       );
-      console.log(res)
+
+      console.log(res);
       setMessage("Income added successfully!");
       setAmount("");
       setSource("");
+      setRemark(""); // ✅ reset remark
       setShowForm(false);
     } catch (error: any) {
       console.error(error);
@@ -73,9 +76,9 @@ const AddIncome: React.FC = () => {
               required
             />
           </div>
-          <div>
 
-            <label className="text-white block mb-1">Source </label>
+          {/* <div>
+            <label className="text-white block mb-1">Source</label>
             <input
               type="text"
               value={source}
@@ -83,7 +86,18 @@ const AddIncome: React.FC = () => {
               className="w-full px-3 py-2 rounded bg-[#2e2e2e] text-white border border-gray-600 focus:outline-none"
               required
             />
+          </div> */}
+
+          <div>
+            <label className="text-white block mb-1">Source</label>
+            <input
+              type="text"
+              value={remark}
+              onChange={(e) => setRemark(e.target.value)}
+              className="w-full px-3 py-2 rounded bg-[#2e2e2e] text-white border border-gray-600 focus:outline-none"
+            />
           </div>
+
           <button
             type="submit"
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl w-full"

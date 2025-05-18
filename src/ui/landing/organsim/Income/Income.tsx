@@ -10,7 +10,7 @@ const Income = () => {
   const [editing, setEditing] = useState<IncomeEntry | null>(null);
   const [editSource, setEditSource] = useState(""); // ✅ renamed for consistency
   const [editAmount, setEditAmount] = useState("");
-  const userId = "2";
+  const userId = localStorage.getItem("userId")
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
