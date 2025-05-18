@@ -1,4 +1,4 @@
-import { Activity, BarChart2, Briefcase, ShoppingCart } from "lucide-react";
+import { Activity, BarChart2, Briefcase, CastIcon, ShoppingCart } from "lucide-react";
 
 const SidebarIcons = ({
   navstate,
@@ -17,10 +17,9 @@ const SidebarIcons = ({
       </div>
       <br />
       <div className="flex flex-col gap-10 py-1">
-        <ShoppingCart size={24} className="cursor-pointer" />
-        <Briefcase size={24} className="cursor-pointer" />
+        <Activity size={20} className="cursor-pointer" />
+         <CastIcon size={20} className="cursor-pointer" />
         <BarChart2 size={24} className="cursor-pointer" />
-        <Activity size={24} className="cursor-pointer" />
       </div>
     </div>
   );

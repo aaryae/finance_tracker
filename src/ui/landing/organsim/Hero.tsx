@@ -70,7 +70,7 @@ const Hero = () => {
 
   return (
     <div className="container mx-auto">
-      <div className="flex flex-wrap gap-1 justify-center">
+      <div className="flex  gap-1 justify-center">
         <div className="flex flex-col gap-3 w-fit justify-center items-center mx-6">
           <AnalyticsLineChart />
           <div className="flex flex-wrap gap-3 md:mx-4 mx-3 justify-center w-full items-center">
